@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tus Instrumentos: la música en un lugar</title>
+
+    <link rel="stylesheet" href="style10.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+<body>
+    <header> 
+        <div>
+            <img class="logo" src="img/logo.jpg" alt="logo">
+            <span id="musica"><i class='bx bxs-hand-right'></i>Toda la música en un sólo lugar</span>
+        </div>
+        <nav>
+            <a href="">Todos los productos</a>
+            <a href="" class="login-register" data-bs-target="#modal-register" data-bs-toggle="modal"><i
+                    class='bx bx-id-card'></i>Crea tu cuenta</a>
+            <a href=""><i class='bx bx-arrow-to-right'></i>Ingresa</a>
+        </nav>
+    </header>
+</header>
+
+<section class="banner">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="img/banner1.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="img/banner3.jpg" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+<main class="container-fluid">
+    <section>
+        <h2>Disfruta nuestras ofertas</h2>
+        <div class="flex-productos row">
+            <article class="col-xl-3 col-md-6 col-sm-12">
+                <img src="img/bateria.jpeg" alt="batería">
+                <div>
+                    <span>Batería</span>
+                    <button>Comprar</button>
+                </div>
+            </article>
+
+            <article class="col-xl-3 col-md-6 col-sm-12">
+                <img src="img/piano.jpg" alt="piano">
+                <div>
+                    <span>Teclado</span>
+                    <button>Comprar</button>
+                </div>
+            </article>
+
+            <article class="col-xl-3 col-md-6 col-sm-12">
+                <img src="img/guitarraElectrica.jpg" alt="guitarra">
+                <div>
+                    <span>Guitarra Eléctrica Fender</span>
+                    <button>Comprar</button>
+                </div>
+            </article>
+
+            <article class="col-xl-3 col-md-6 col-sm-12">
+                <img src="img/violin.jpg" alt="violín">
+                <div>
+                    <span>Violín</span>
+                    <button>Comprar</button>
+                </div>
+            </article>
+        </div>
+    </section>
+    <hr>
+    <section>
+        <h2>Productos destacados</h2>
+        <div class="flex-productos row">
+            <article class="productos-text-center col-md-6 col-sm-12">
+                <img class="img-text-center" src="img/bajo.jpg" alt="bajo">
+                
+            </article>
+
+            <article class="productos-text-center col-md-6 col-sm-12">
+                <img class="img-text-center" src="img/guitarraElectrica.jpg" alt="guitarra">
+                
+            </article>
+        </div>
+    </section>
+    <hr>
+</main>
+<footer>
+    <div class="row">
+        <div class="col-xl-4 col-md-6 col-sm-12">
+            <h3>Seguinos</h3>
+            <ul>
+                <li><i class='bx bxl-facebook-circle'></i> Facebook</li>
+                <li><i class='bx bxl-instagram'></i>Instagram</li>
+                <li><i class='bx bxl-linkedin-square'></i>Linkedin</li>
+                <li><i class='bx bxl-youtube'></i>Youtube</li>
+            </ul>
+
+        </div>
+
+        <div class="col-xl-4 col-md-6 col-sm-12">
+            <h3>Otros servicios</h3>
+            <ul>
+                <li>Pagos</li>
+                <li>Tiendas</li>
+                <li>Envios</li>
+            </ul>
+
+        </div>
+
+        <div class="col-xl-4 col-sm-12 footer-email">
+            <h3>Trabaja con nosotros</h3>
+            <form>
+                <input type="email" placeholder="ingresa tu email">
+                <input type="submit" value="enviar" class="footer_button">
+            </form>
+        </div>
+    </div>
+</footer>
+<div class="modal fade" id="modal-register">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="logo">
+                <img src="img/logo.jpg" alt="logo">
+            </div>
+            <h1>Registro</h1>
+            <form>
+                <div>
+                    <label for="Nombre">Nombre:</label>
+                    <input type="text" id="Nombre">
+                </div>
+                <div>
+                    <label for="Email">Email:</label>
+                    <input type="email" id="Email">
+                </div>
+                <div>
+                    <label for="Contraseña">Contraseña:</label>
+                    <input type="password" id="Contraseña">
+                </div>
+                <div>
+                    <input class="enviar" type="submit" value="Registrar">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+    <h2>Carrito de compras</h2>
+    <ul id="carrito"></ul>
+
+    <button id="boton">Agregar batería</button>
+    <button id="boton">Agregar piano</button>
+    <button id="boton">Agregar guitarra</button>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
+    <script src="main10.js"></script>
+</body>
+</html>

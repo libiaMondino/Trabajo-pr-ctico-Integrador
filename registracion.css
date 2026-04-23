@@ -1,0 +1,33 @@
+.modal img{
+    width: 300px;
+}
+.modal-content .logo{
+    text-align: center;
+}
+.modal h1{
+    text-align: center;
+}
+.modal .modal-dialog{
+    background-color: #202952;
+    padding: 30px;
+    border-radius: 30px;
+}
+.modal form{
+    display: flex;
+    flex-direction: column;
+}
+.modal .modal-content form div{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    padding: 0 50px;
+}
+.modal .enviar{
+    background-color: grey;
+    color: white;
+    border: 0;
+    padding:5px 10px;
+    border-radius: 5px;
+}
+
+
