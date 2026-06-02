@@ -1,3 +1,15 @@
+
+.boton-comprar {
+  background-color: #5b0017;
+  border: none;
+  width: 120px;
+  transition: background-color 0.3s ease;
+}
+
+.boton-comprar:hover {
+  background-color: #8a0024;
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
