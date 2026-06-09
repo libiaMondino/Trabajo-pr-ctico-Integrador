@@ -53,8 +53,8 @@ function App() {
       ) : (
         carrito.map((item) => (
           <div
-            key={Math.random()}
-            style={{
+              key={item.id}            
+              style={{
               border: "1px solid black",
               padding: "10px",
               marginBottom: "10px",
