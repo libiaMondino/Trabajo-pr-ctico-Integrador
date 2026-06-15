@@ -1,10 +1,7 @@
 /*LO QUE FALTA: 
-*El uso de useLocation relacionado con productoCard
-*Ver qué argumentos pasarle a la función agregarAlCarrito y cómo obtenerlo
+*Evaluar compatiilidad de agregarCarrito y carrito(capaz que convenga Context)
 *Limpieza input cantidad
-*Validación cuando el campo esta vacío(mensaje correcto)
 *Agregar el renderizado de review
-*Agregar categoria como atributo de producto(musica, audio, para hacer el filtro);
 */
 
 import React from 'react';
@@ -14,12 +11,11 @@ import {Badge, Button, Row, Col, Container} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import { Star, StarFill } from "react-bootstrap-icons";
 
-export const ProductDetails = ({name, type, brand, category, rating, imgUrl, available, price, percentageDiscount, stock, description}) => {
-  //const {name, type, brand, rating, imgUrl, available, price, percentageDiscount, stock, description} = producto;
-  //const location = useLocation();
-  //const { id } = useParams();
-  // Lo que recibe del navigation(el objeto que trae = instrument) desde la card
-  //const { name, type, brand, rating, imgUrl, available, price, percentageDiscount, stock, description} = location.state.instrument;
+export const ProductDetails = () => {
+  
+  //Recibe el objeto product de ProductoCard usando navigate 
+  const location = useLocation();
+  const { name, type, brand, category, rating, imgUrl, available, price, percentageDiscount, stock, description} = location.state.product;
   
   const [cantidad, setCantidad] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,26 +32,41 @@ export const ProductDetails = ({name, type, brand, category, rating, imgUrl, ava
   // Se verifica que la cantidad ingresada respete el stock
   const handleOnBlur = (e) => {
     const valor = Number(e.target.value); 
+
+    if (!valor){
+      setErrorMessage("Ingresar un valor");
+      return;}
+
+    if(!Number.isInteger(valor)){
+      setErrorMessage("Ingrese un número entero");
+      return;}
+
     if (valor > stock){
       setErrorMessage("La cantidad ingresada supera el stock disponible");
-    } else if ( valor < 1){
+      return;}
+
+    if ( valor < 1){
       setErrorMessage("La cantidad ingresada es menor a la cantidad mínima requerida(1)");
-    } else {
+      return;
+    }else {
       setErrorMessage("");
     }
   } 
 
   // Se verifica nuevamente que los valores de cantidad sean acordes al stock y se agregue al carrito
   const handleAgregarAlCarrito = (e) => {
-    if (cantidad > stock || cantidad < 1 || cantidad == null){
+    e.preventDefault();
+    const cantNumb = Number(cantidad)
+    if (cantNumb> stock || cantNumb < 1 || cantNumb == null || Number.isInteger(cantNumb) == false){
       return;
     }
-    //funcion que recibe del componente carrito 
-    /*const productoAlCarrito={
+    
+    const productoAlCarrito={
       ...producto,
       cantidad: {cantidad}
-    }*/
-    //agregarAlCarrito();
+    }
+    //funcion que recibe del componente carrito 
+    agregarAlCarrito(productoAlCarrito);
     alert("Producto agregado al carrito");
 }
 
@@ -126,8 +137,10 @@ export const ProductDetails = ({name, type, brand, category, rating, imgUrl, ava
                 <Form.Control
                   type="number"
                   placeholder="Ingresar Cantidad"
+                  required
                   min={1}
                   max={stock}
+                  value={cantidad}
                   onChange={(e)=>setCantidad(e.target.value)}
                   onBlur={handleOnBlur} 
                   isInvalid={errorMessage !== ""} 
@@ -142,8 +155,8 @@ export const ProductDetails = ({name, type, brand, category, rating, imgUrl, ava
             </Button>
           </>
           }
-      
-          <small className="product-note">Descripción: {description}</small>
+
+          <small className="product-note"> {available? `Descripción: ${description}` : "No se encuentra disponible en este momento" }</small>
 
         </Col>
       </Row>

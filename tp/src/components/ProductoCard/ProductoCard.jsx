@@ -14,10 +14,12 @@ export const ProductoCard = ({
     available,
     price,
     percentageDiscount,
+    stock,
+    description
 
     }) => {
 
-    //const navigate= useNavigate();
+    const navigate= useNavigate();
 
     const ratingStars= Array.from({length: 5},(_, index) =>(
     index < rating ?(
@@ -27,9 +29,26 @@ export const ProductoCard = ({
     )));
 
     const discountedPrice = price-(price*(percentageDiscount/100));
-    //const handleOnClick=() => {
-    //navigate("/producDetails");
-    //};
+    const handleOnClick=() => {
+        navigate(`${id}`,{
+            state: {
+                product :{
+                    id,
+                    name,
+                    type,
+                    brand, 
+                    category,
+                    rating,
+                    imgUrl,
+                    available,
+                    price,
+                    percentageDiscount,  
+                    stock,
+                    description
+                }
+            }
+        });
+    };
 
     return (
 <Card 
@@ -92,8 +111,9 @@ export const ProductoCard = ({
         
         <Row className="text-center mb-2">
             <Button 
-            variant="dark"
-            className="boton-comprar"
+                variant="dark"
+                className="boton-comprar"
+                onClick={handleOnClick}
             >
             Comprar
             </Button>

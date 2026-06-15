@@ -19,6 +19,8 @@ export const Productos = ({busqueda}) => {
         available: true,
         price: 89999,
         percentageDiscount: 15,
+        stock: 3,
+        description: "YEAHHH"
     },
     {
         id: 2,
@@ -31,6 +33,8 @@ export const Productos = ({busqueda}) => {
         available: true,
         price: 1250000,
         percentageDiscount: 0,
+        stock: 40,
+        description: "YEAHHH"
     },
     {
         id: 3,
@@ -43,27 +47,33 @@ export const Productos = ({busqueda}) => {
         available: false,
         price: 74999,
         percentageDiscount: 20,
+        stock: 0,
+        description:"NOOOOO"
     },
     ];
   return (
     <>
-        <h3 className="ms-3 mt-4">Categoría: {categoria}</h3>
-        <div className="d-flex flex-wrap gap-3 ms-3">
-            {
-                arreglo.filter((prod)=>{
-                    if (busqueda.trim() !== ""){
-                        return prod.name.toLowerCase().includes(busqueda.toLowerCase()) 
-                    } 
-                    if(!categoria){
-                        return true;
-                    }
-                    return categoria === "Ofertas"? prod.percentageDiscount > 0 : categoria.toLowerCase() === prod.category.toLowerCase();
-                
-                    })  
-                .map((prod)=> <ProductoCard key={prod.id} {...prod}/>)
-            }      
-    
+    {
+        <div>
+            <h3 className="ms-3 mt-4">Categoría: {categoria}</h3>
+            <div className="d-flex flex-wrap gap-3 ms-3">
+                {
+                    arreglo.filter((prod)=>{
+                        if (busqueda.trim() !== ""){
+                            return prod.name.toLowerCase().includes(busqueda.toLowerCase()) 
+                        } 
+                        if(!categoria){
+                            return true;
+                        }
+                        return categoria === "Ofertas"? prod.percentageDiscount > 0 : categoria.toLowerCase() === prod.category.toLowerCase();
+                    
+                        })  
+                    .map((prod)=> <ProductoCard key={prod.id} {...prod}/>)
+                }      
+        
+            </div>
         </div>
+    }  
     </>
   ) 
 }
