@@ -14,7 +14,7 @@ import {Badge, Button, Row, Col, Container} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import { Star, StarFill } from "react-bootstrap-icons";
 
-export const ProductDetails = ({name, type, brand, rating, imgUrl, available, price, percentageDiscount, stock, description}) => {
+export const ProductDetails = ({name, type, brand, category, rating, imgUrl, available, price, percentageDiscount, stock, description}) => {
   //const {name, type, brand, rating, imgUrl, available, price, percentageDiscount, stock, description} = producto;
   //const location = useLocation();
   //const { id } = useParams();

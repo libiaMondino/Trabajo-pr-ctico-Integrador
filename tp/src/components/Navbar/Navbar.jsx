@@ -1,10 +1,17 @@
 import React from 'react'
 import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
-function Navbar() {
+function Navbar({setBusqueda}) {
+    const navigate = useNavigate();
+
+    const handleOnSubmitSearch= (e) =>{
+        e.preventDefault();
+        navigate("/productos");
+    };
+    
     return (
         <nav className="navbar navbar-expand-lg bg-white shadow-sm py-3">
 
@@ -18,30 +25,31 @@ function Navbar() {
                 {/* Menú */}
                 <div className="d-flex align-items-center">
 
-                    <Link to="/audio" className="menu-btn">
+                    <Link to="productos/Audio" className="menu-btn">
                         Audio
                     </Link>
 
-                    <Link to="/Musica" className="menu-btn">
+                    <Link to="productos/Musica" className="menu-btn">
                         Música
                     </Link>
 
-                    <Link to="/Ofertas" className="menu-btn">
+                    <Link to="productos/Ofertas" className="menu-btn">
                         Ofertas
                     </Link>
 
                 </div>
 
                 {/* Buscador */}
-                <form className="d-flex search-box">
+                <form className="d-flex search-box" onSubmit={handleOnSubmitSearch}>
 
                     <input
                         className="form-control"
                         type="search"
                         placeholder="Buscar..."
+                        onChange={(e)=>setBusqueda(e.target.value)}
                     />
 
-                    <button className="btn btn-light">
+                    <button className="btn btn-light" >
                         <FaSearch />
                     </button>
 

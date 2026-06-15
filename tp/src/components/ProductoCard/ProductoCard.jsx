@@ -2,11 +2,13 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import {Badge, Card, Button, Row, Col} from "react-bootstrap";
 import { Star, StarFill } from "react-bootstrap-icons";
+import "../../App.css";
 export const ProductoCard = ({ 
     id,
     name,
     type,
     brand, 
+    category,
     rating,
     imgUrl,
     available,
@@ -33,7 +35,7 @@ export const ProductoCard = ({
 <Card 
     className="shadow-sm p-2"
     style={{
-    width:"230px",
+    width:"300px",
     borderRadius: "10px",
     }}>
 
@@ -53,56 +55,49 @@ export const ProductoCard = ({
         textAlign: "center",
     }}
     >
-    <Row className="d-flex justify-content-between align-items-center mb-3">
     
-        <Col className="text-start">
-            <div className="d-flex justify-content-center align-items-center">
-            {ratingStars}
-            </div>
-        </Col>
-        
-        <Col className="text-end">
-        { available ?
-            <Badge bg="success">Disponible</Badge>
-            :
-            <Badge bg="danger">Sin stock</Badge>
-        } 
-        </Col>
-        
-    </Row>
+        <div className="d-flex justify-content-between align-items-center mb-3">
+            <div>{ratingStars}</div>
 
-    <Card.Title
-    style={{
-        fontSize: "16px",
-        marginBottom: "0px",
-        }}
-    >{name}</Card.Title>
+            {available ? (
+                <Badge bg="success">Disponible</Badge>
+            ) : (
+                <Badge bg="danger">Sin stock</Badge>
+            )}
+        </div>
 
-    <Card.Text
-        className="text-muted"
+        <Card.Title
         style={{
-        fontSize: "14px",
-        marginBottom: "5px",
-        }}
-    >
-        {brand}
-    </Card.Text>
+            fontSize: "16px",
+            marginBottom: "0px",
+            }}
+        >{name}</Card.Title>
 
-    <Card.Text className="mb-0">
-        <strong>
-        ${percentageDiscount === 0 ? price : discountedPrice}
-        </strong>
-    </Card.Text>
-    </Card.Body>
-    
-    <Row>
-        <Button 
-        variant="dark"
-        className="mx-auto d-block boton-comprar"
+        <Card.Text
+            className="text-muted"
+            style={{
+            fontSize: "14px",
+            marginBottom: "5px",
+            }}
         >
-        Comprar
-        </Button>
-    </Row>
+            {brand}
+        </Card.Text>
+
+        <Card.Text className="mb-0">
+            <strong>
+            {percentageDiscount === 0 ? <h8>${price}</h8> : <h8 className='discounted-price'>${discountedPrice}</h8>}
+            </strong>
+        </Card.Text>
+    </Card.Body>
+        
+        <Row className="text-center mb-2">
+            <Button 
+            variant="dark"
+            className="boton-comprar"
+            >
+            Comprar
+            </Button>
+        </Row>
 </Card>
 )
 }

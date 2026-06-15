@@ -1,4 +1,20 @@
+/*ProductoCard*/
+.boton-comprar {
+  background-color: #5b0017 !important;
+  border: none;
+  width: 130px !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  transition: background-color 0.3s ease;
+}
 
+.boton-comprar:hover {
+  background-color: #8a0024 !important;
+}
+
+
+/*ProductDetails*/
 .discounted-price {
    color: #7a1f3d; 
    font-weight: bold; 
@@ -52,6 +68,8 @@
     margin-top: 15px;
     color: #888;
 }
+
+/*Creo que se tiene que borrar todo lo que sigue*/
 .counter {
   font-size: 16px;
   padding: 5px 10px;
