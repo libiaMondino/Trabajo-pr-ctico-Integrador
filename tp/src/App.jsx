@@ -1,11 +1,27 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { Routes, Route } from "react-router";
+import { useState } from "react";
+import Carrito from "./components/Carrito/Carrito";
+import Navbar from "./components/Navbar/Navbar";
+import Home from "./pages/Home";
+import { Productos } from "./components/Productos/Productos";
+import { ProductDetails } from "./components/ProductDetails/ProductDetails";
+import "./App.css";
+
 
 function App() {
-  //Rutas e importar componentes
+  const [busqueda, setBusqueda] = useState("");
   return (
-    <>
-      
-    </>
+  <>
+    <Navbar setBusqueda={setBusqueda}/>
+    
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/carrito" element={<Carrito />} />
+      <Route path="/productos/:categoria?" element={<Productos busqueda={busqueda} />} />
+      <Route path="/productos/:categora?/:id" element={<ProductDetails/>} />
+    </Routes>
+    
+  </>
   )
 }
 

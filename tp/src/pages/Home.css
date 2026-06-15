@@ -1,0 +1,31 @@
+.banner-container {
+  position: relative;
+}
+
+.banner-img {
+  width: 100%;
+  display: block;
+}
+
+.banner-btn {
+  position: absolute;
+  bottom: 21%;
+  left: 12%;
+  /*transform: translateX(-50%);*/
+
+  background-color: #58091e;
+  color: white;
+
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.banner-btn:hover {
+  /*opacity: 0.9;*/
+  background-color: #7b0f2f;
+}
