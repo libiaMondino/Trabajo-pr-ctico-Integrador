@@ -1,0 +1,68 @@
+.reseñas-container {
+  margin-top: 40px;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.reseñas-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.reseñas-form input,
+.reseñas-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.reseñas-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.estrellas-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.estrella {
+  font-size: 28px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.estrella.activa {
+  color: gold;
+}
+
+.reseñas-form button {
+  width: fit-content;
+  padding: 10px 20px;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lista-reseñas {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.reseña-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #f9f9f9;
+}
+
+.reseña-estrellas {
+  margin: 5px 0;
+}
