@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { useState } from 'react';
+import { useCarrito } from "./Context/CarritoContext";
 import { useLocation, useParams} from "react-router";
 import {Badge, Button, Row, Col, Container} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
@@ -61,12 +62,23 @@ export const ProductDetails = () => {
       return;
     }
     
-    const productoAlCarrito={
-      ...producto,
-      cantidad: {cantidad}
-    }
+    const productoAlCarrito = {
+      name,
+      type,
+      brand,
+      category,
+      rating,
+      imgUrl,
+      available,
+      price,
+      percentageDiscount,
+      stock,
+      description,
+      cantidad
+    };
+
     //funcion que recibe del componente carrito 
-    agregarAlCarrito(productoAlCarrito);
+    const { agregarAlCarrito } = useCarrito();
     alert("Producto agregado al carrito");
 }
 

@@ -7,11 +7,19 @@ import { Link, useNavigate } from "react-router-dom";
 function Navbar({setBusqueda}) {
     const navigate = useNavigate();
 
+    const usuario = JSON.parse(
+        localStorage.getItem("usuario")
+    );
+
     const handleOnSubmitSearch= (e) =>{
         e.preventDefault();
         navigate("/productos");
     };
     
+
+
+    
+
     return (
         <nav className="navbar navbar-expand-lg bg-white shadow-sm py-3">
 
@@ -55,14 +63,29 @@ function Navbar({setBusqueda}) {
 
                 </form>
 
-                <div className="d-flex gap-1">
+                <div className="d-flex gap-1 align-items-center">
 
-                    <Link to="/login" className="menu-btn icon-btn">
-                        <FaUser size={18} />
-                        <p className="m-0">Iniciar Sesión</p>
-                    </Link>
+                    {usuario ? (
+                        <>
+                            <span className="me-3">
+                                {usuario.nombre} ({usuario.rol})
+                            </span>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/login" className="menu-btn icon-btn">
+                                <FaUser size={18} />
+                                <p className="m-0">Iniciar Sesión</p>
+                            </Link>
 
-                    <Link to="/carrito" className="menu-btn icon-btn">
+                            <Link to="/registro" className="menu-btn icon-btn">
+                                <p className="m-0">Registrarse</p>
+                            </Link>
+                        </>
+                    )}
+
+
+                    <Link to="./carrito" className="menu-btn icon-btn">
                         <FaShoppingCart size={18} />
                         <p className="m-0">Carrito</p>
                         <span>Carrito</span>

@@ -5,6 +5,8 @@ function Registro() {
     nombre: "",
     email: "",
     password: "",
+    rol: "usuario",
+
   });
 
   const [errores, setErrores] = useState({});
@@ -19,6 +21,20 @@ function Registro() {
 
   const validar = () => {
     let nuevosErrores = {};
+
+    <div>
+    <label>Rol:</label>
+
+    <select
+      name="rol"
+      value={formulario.rol}
+      onChange={manejarCambio}
+    >
+      <option value="usuario">Usuario</option>
+      <option value="admin">Admin</option>
+      <option value="super-admin">Super Admin</option>
+    </select>
+    </div>
 
     if (!formulario.nombre.trim()) {
       nuevosErrores.nombre = "El nombre es obligatorio";
@@ -47,8 +63,8 @@ function Registro() {
     setErrores(erroresEncontrados);
 
     if (Object.keys(erroresEncontrados).length === 0) {
+      localStorage.setItem("usuarioRegistrado", JSON.stringify(formulario));
       setMensaje("Registro exitoso");
-      console.log(formulario);
     }
   };
 
@@ -103,5 +119,7 @@ function Registro() {
     </main>
   );
 }
+
+
 
 export default Registro;
