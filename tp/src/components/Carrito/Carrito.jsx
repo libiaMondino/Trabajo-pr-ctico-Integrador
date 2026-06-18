@@ -1,80 +1,23 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { CarritoContext } from "../../Context/CarritoContext";
 
-function App() {
+function Carrito() {
+  const {
+    carrito,
+    agregarAlCarrito,
+    eliminarDelCarrito,
+    aumentarCantidad,
+    disminuirCantidad,
+    total,
+  } = useContext(CarritoContext);
+
   const productos = [
     { id: 1, nombre: "Guitarra", precio: 1200, cantidad: 10 },
     { id: 2, nombre: "Batería", precio: 3000, cantidad: 2 },
     { id: 3, nombre: "Piano", precio: 5000, cantidad: 5 },
   ];
 
-  const [carrito, setCarrito] = useState([]);
 
-  const agregarAlCarrito = (producto) => {
-    setCarrito((carritoActual) => {
-      const yaExiste = carritoActual.find((item) => item.id === producto.id);
-
-      if (yaExiste) {
-        // 🚨 IF DE CONTROL: Si ya alcanzó el stock máximo disponible, no hacemos nada
-        if (yaExiste.cantidad >= producto.cantidad) {
-          alert(`¡No hay más stock disponible de ${producto.nombre}!`);
-          return carritoActual; // Devuelve el carrito tal cual, sin cambios
-        }
-
-        return carritoActual.map((item) =>
-          item.id === producto.id
-            ? { ...item, cantidad: item.cantidad + 1 }
-            : item
-        );
-      }
-
-      // Si es el primero y el stock original es 0 (por las dudas)
-      if (producto.cantidad <= 0) {
-        alert("Lo sentimos, este producto está agotado.");
-        return carritoActual;
-      }
-
-      return [...carritoActual, { ...producto, cantidad: 1 }];
-    });
-  };
-
-  const eliminarDelCarrito = (id) => {
-    const nuevoCarrito = carrito.filter((item) => item.id !== id);
-    setCarrito(nuevoCarrito);
-  };
-
-  const aumentarCantidad = (id) => {
-    setCarrito(carritoActual =>
-      carritoActual.map(item => {
-        if (item.id === id) {
-          // 🚨 IF DE CONTROL: item.cantidad es lo que tengo en el carrito.
-          // Pero ojo, al meter el objeto original, perdimos el valor del "stock" a menos que lo controlemos con el array original 'productos'
-          const productoOriginal = productos.find(p => p.id === id);
-
-          if (item.cantidad >= productoOriginal.cantidad) {
-            alert("Alcanzaste el límite de stock disponible.");
-            return item; // No suma
-          }
-
-          return { ...item, cantidad: item.cantidad + 1 };
-        }
-        return item;
-      })
-    );
-  };
-  const disminuirCantidad = (id) => {
-    setCarrito(carritoActual =>
-      carritoActual.map(item =>
-        item.id === id
-          ? { ...item, cantidad: Math.max(1, (item.cantidad || 1) - 1) }
-          : item
-      )
-    );
-  };
-
-  const total = carrito.reduce((acc, item) => {
-    const cantidad = item.cantidad || 1;
-    return acc + (item.precio * cantidad);
-  }, 0);
 
   return (
     <div style={{ padding: "20px", fontFamily: "Arial" }}>
@@ -237,4 +180,4 @@ function App() {
     </div>
   )
 }
-export default App;
+export default Carrito;

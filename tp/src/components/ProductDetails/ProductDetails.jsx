@@ -15,6 +15,7 @@ import Reseñas from '../Reseñas/Reseñas';
 
 export const ProductDetails = () => {
   
+  const { agregarAlCarrito } = useCarrito();
   //Recibe el objeto product de ProductoCard usando navigate 
   const location = useLocation();
   const { name, type, brand, category, rating, imgUrl, available, price, percentageDiscount, stock, description} = location.state.product;

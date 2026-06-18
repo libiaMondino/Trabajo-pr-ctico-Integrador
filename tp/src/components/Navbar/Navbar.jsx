@@ -1,24 +1,29 @@
-import React from 'react'
+import React from 'react';
 import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { CarritoContext } from "../../Context/CarritoContext";
 
+function Navbar({ setBusqueda }) {
 
-function Navbar({setBusqueda}) {
     const navigate = useNavigate();
+
+    const { carrito } = useContext(CarritoContext);
+
+    const cantidadProductos = carrito.reduce(
+        (acc, item) => acc + item.cantidad,
+        0
+    );
 
     const usuario = JSON.parse(
         localStorage.getItem("usuario")
     );
 
-    const handleOnSubmitSearch= (e) =>{
+    const handleOnSubmitSearch = (e) => {
         e.preventDefault();
         navigate("/productos");
     };
-    
-
-
-    
 
     return (
         <nav className="navbar navbar-expand-lg bg-white shadow-sm py-3">
@@ -54,10 +59,10 @@ function Navbar({setBusqueda}) {
                         className="form-control"
                         type="search"
                         placeholder="Buscar..."
-                        onChange={(e)=>setBusqueda(e.target.value)}
+                        onChange={(e) => setBusqueda(e.target.value)}
                     />
 
-                    <button className="btn btn-light" >
+                    <button className="btn btn-light">
                         <FaSearch />
                     </button>
 
@@ -84,11 +89,11 @@ function Navbar({setBusqueda}) {
                         </>
                     )}
 
-
-                    <Link to="./carrito" className="menu-btn icon-btn">
+                    <Link to="/carrito" className="menu-btn icon-btn">
                         <FaShoppingCart size={18} />
-                        <p className="m-0">Carrito</p>
-                        <span>Carrito</span>
+                        <p className="m-0">
+                            Carrito ({cantidadProductos})
+                        </p>
                     </Link>
 
                 </div>
