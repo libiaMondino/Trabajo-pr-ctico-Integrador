@@ -3,7 +3,7 @@ import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { CarritoContext } from "../../context/CarritoContext";
+import { CarritoContext } from "../../Context/CarritoContext";
 
 function Navbar({ setBusqueda }) {
 
