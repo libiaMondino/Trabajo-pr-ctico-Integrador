@@ -37,6 +37,9 @@ function Navbar({ setBusqueda }) {
 
                 {/* Menú */}
                 <div className="d-flex align-items-center">
+                    <Link to="/" className="menu-btn">
+                        Inicio
+                    </Link>
 
                     <Link to="productos/Audio" className="menu-btn">
                         Audio
@@ -75,6 +78,16 @@ function Navbar({ setBusqueda }) {
                             <span className="me-3">
                                 {usuario.nombre} ({usuario.rol})
                             </span>
+
+                            <button
+                                className="btn btn-danger btn-sm"
+                                onClick={() => {
+                                    localStorage.removeItem("usuario");
+                                    window.location.reload();
+                                }}
+                            >
+                                Cerrar sesión
+                            </button>
                         </>
                     ) : (
                         <>

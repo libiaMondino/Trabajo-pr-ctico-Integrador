@@ -1,4 +1,7 @@
 import banner from "../assets/img/img/banner.png";
+import guitarraElectrica from "/src/assets/img/img/guitarraElectrica.jpg"
+import piano from "/src/assets/img/img/piano.jpg"
+import bateria from "/src/assets/img/img/bateria.jpeg"
 import "./Home.css";
 
 function Home() {
@@ -30,7 +33,7 @@ function Home() {
                     <div className="col-md-4">
                         <div className="card">
                             <img
-                                src="https://placehold.co/300x200"
+                                src= {guitarraElectrica}
                                 className="card-img-top"
                                 alt="Producto"
                             />
@@ -48,7 +51,7 @@ function Home() {
                     <div className="col-md-4">
                         <div className="card">
                             <img
-                                src="https://placehold.co/300x200"
+                                src= {piano}
                                 className="card-img-top"
                                 alt="Producto"
                             />
@@ -66,7 +69,7 @@ function Home() {
                     <div className="col-md-4">
                         <div className="card">
                             <img
-                                src="https://placehold.co/300x200"
+                                src= {bateria}
                                 className="card-img-top"
                                 alt="Producto"
                             />

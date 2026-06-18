@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import "./inicioSesion.css";
 
 function InicioSesion() {
   const [formulario, setFormulario] = useState({
@@ -62,44 +64,80 @@ function InicioSesion() {
   };
 
   return (
-    <main>
-      <div className="logo">
-        <img src="img/logo.jpg" alt="logo" />
-      </div>
+  <div className="login-container">
 
-      <h1>Iniciar Sesión</h1>
+    <div className="login-card">
+
+      <h1 className="login-title">
+        Iniciar Sesión
+      </h1>
 
       <form onSubmit={manejarSubmit}>
-        <div>
-          <label>Email:</label>
+
+        <div className="login-input">
+          <label className="form-label">
+            Email
+          </label>
+
           <input
             type="email"
             name="email"
+            className="form-control"
             value={formulario.email}
             onChange={manejarCambio}
           />
-          {errores.email && <p>{errores.email}</p>}
+
+          {errores.email &&
+            <p className="error-text">
+              {errores.email}
+            </p>
+          }
         </div>
 
-        <div>
-          <label>Contraseña:</label>
+        <div className="login-input">
+          <label className="form-label">
+            Contraseña
+          </label>
+
           <input
             type="password"
             name="password"
+            className="form-control"
             value={formulario.password}
             onChange={manejarCambio}
           />
-          {errores.password && <p>{errores.password}</p>}
+
+          {errores.password &&
+            <p className="error-text">
+              {errores.password}
+            </p>
+          }
         </div>
 
-        <div>
-          <button type="submit">Ingresar</button>
-        </div>
+        <button
+          type="submit"
+          className="btn login-btn text-black">
+          Ingresar
+        </button>
+        <p className="text-center mt-3">
+          ¿No tenés cuenta?
+        <Link to="/registro">
+          Registrate
+        </Link>
+        </p>
+
       </form>
 
-      {mensaje && <p>{mensaje}</p>}
-    </main>
-  );
+      {mensaje &&
+        <p className="success-text">
+          {mensaje}
+        </p>
+      }
+
+    </div>
+
+  </div>
+);
 }
 
 export default InicioSesion;

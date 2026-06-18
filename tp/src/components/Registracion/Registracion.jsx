@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Registro() {
   const [formulario, setFormulario] = useState({
@@ -69,55 +70,103 @@ function Registro() {
   };
 
   return (
-    <main>
-      <div className="logo">
-        <img src="img/logo.jpg" alt="logo" />
-      </div>
+  <div className="login-container">
 
-      <h1>Registro</h1>
+    <div className="login-card">
+
+      <h1 className="login-title">
+        Registro de Usuario
+      </h1>
 
       <form onSubmit={manejarSubmit}>
-        <div>
-          <label>Nombre:</label>
+
+        <div className="login-input">
+          <label className="form-label">
+            Nombre
+          </label>
+
           <input
             type="text"
             name="nombre"
+            className="form-control"
             value={formulario.nombre}
             onChange={manejarCambio}
           />
-          {errores.nombre && <p>{errores.nombre}</p>}
+
+          {errores.nombre && (
+            <p className="error-text">
+              {errores.nombre}
+            </p>
+          )}
         </div>
 
-        <div>
-          <label>Email:</label>
+        <div className="login-input">
+          <label className="form-label">
+            Email
+          </label>
+
           <input
             type="email"
             name="email"
+            className="form-control"
             value={formulario.email}
             onChange={manejarCambio}
           />
-          {errores.email && <p>{errores.email}</p>}
+
+          {errores.email && (
+            <p className="error-text">
+              {errores.email}
+            </p>
+          )}
         </div>
 
-        <div>
-          <label>Contraseña:</label>
+        <div className="login-input">
+          <label className="form-label">
+            Contraseña
+          </label>
+
           <input
             type="password"
             name="password"
+            className="form-control"
             value={formulario.password}
             onChange={manejarCambio}
           />
-          {errores.password && <p>{errores.password}</p>}
+
+          {errores.password && (
+            <p className="error-text">
+              {errores.password}
+            </p>
+          )}
         </div>
 
-        <div>
-          <button type="submit">Registrar</button>
-        </div>
+        <button
+          type="submit"
+          className="btn login-btn text-black"
+        >
+          Registrarse
+        </button>
+
+        <p className="text-center mt-3">
+          ¿Ya tenés cuenta?
+
+        <Link to="/login">
+          Iniciá sesión
+        </Link>
+        </p>
+
       </form>
 
-      {mensaje && <p>{mensaje}</p>}
-    </main>
-  );
+      {mensaje && (
+        <p className="success-text">
+          {mensaje}
+        </p>
+      )}
+
+    </div>
+
+  </div>
+);
 }
 
 

@@ -1,10 +1,10 @@
 [
   {
     "id": 1,
-    "name": "Teclado Casio T100",
-    "type": "Teclado T100",
-    "brand": "Casio",
-    "category": "musica",
+    "name": "Auriculares JBL Tune 520BT",
+    "type": "Auriculares Inalámbricos",
+    "brand": "JBL",
+    "category": "audio",
     "rating": 3,
     "imgUrl": "",
     "available": true,
