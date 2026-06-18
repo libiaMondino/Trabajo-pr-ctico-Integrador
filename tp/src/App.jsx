@@ -1,18 +1,18 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import Carrito from "./components/Carrito/Carrito";
-import Navbar from "./components/Navbar/Navbar";
-import Home from "./pages/Home";
-import InicioSesion from "./components/InicioSesion/InicioSesion";
-import Registracion from "./components/Registracion/Registracion";
-import RoleRoute from "./components/RoleRoute/RoleRoute";
-import AdminPanel from "./pages/AdminPanel";
-import SuperAdminPanel from "./pages/SuperAdminPanel";
-import NewProduct from "./pages/NewProduct";
-import AdminProductos from "./pages/AdminProductos";
-import RoleRoute from "./components/RoleRoute/RoleRoute";
-import { Productos } from "./components/Productos/Productos";
-import { ProductDetails } from "./components/ProductDetails/ProductDetails";
+import Carrito from "./components/Carrito/Carrito.jsx";
+import Navbar from "./components/Navbar/Navbar.jsx";
+import Home from "./pages/Home.jsx";
+import InicioSesion from "./components/InicioSesion/InicioSesion.jsx";
+import Registracion from "./components/Registracion/Registracion.jsx";
+import RoleRoute from "./components/RoleRoute/RoleRoute.jsx";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute.jsx";
+import AdminPanel from "./pages/AdminPanel.jsx";
+import SuperAdminPanel from "./pages/SuperAdminPanel.jsx";
+import NewProduct from "./pages/NewProduct.jsx";
+import AdminProductos from "./pages/AdminProductos.jsx";
+import { Productos } from "./components/Productos/Productos.jsx";
+import { ProductDetails } from "./components/ProductDetails/ProductDetails.jsx";
 import "./App.css";
 
 

@@ -6,11 +6,12 @@
 
 import React from 'react';
 import { useState } from 'react';
-import { useCarrito } from "./Context/CarritoContext";
-import { useLocation, useParams} from "react-router";
+import { useCarrito } from '../../Context/CarritoContext';
+import { useLocation, useParams} from "react-router-dom";
 import {Badge, Button, Row, Col, Container} from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import { Star, StarFill } from "react-bootstrap-icons";
+import Reseñas from '../Reseñas/Reseñas';
 
 export const ProductDetails = () => {
   
@@ -173,9 +174,7 @@ export const ProductDetails = () => {
         </Col>
       </Row>
       <Row>
-        <>
-      rating
-      </>
+        <Reseñas/>
       </Row>
       
     </Container>
