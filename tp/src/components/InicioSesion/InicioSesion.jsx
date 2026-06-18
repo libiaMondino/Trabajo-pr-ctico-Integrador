@@ -43,7 +43,21 @@ function InicioSesion() {
 
     if (Object.keys(erroresEncontrados).length === 0) {
       setMensaje("Inicio de sesión exitoso");
-      console.log(formulario);
+      localStorage.setItem("usuario", JSON.stringify({
+        email: formulario.email,
+        rol: "usuario"
+        })
+      );
+      console.log(formulario);const usuarioGuardado = JSON.parse(
+      localStorage.getItem("usuarioRegistrado"));
+
+      if (usuarioGuardado && usuarioGuardado.email === formulario.email && usuarioGuardado.password === formulario.password) {
+        localStorage.setItem("usuario", JSON.stringify(usuarioGuardado));
+
+        setMensaje("Inicio de sesión exitoso");
+      } else {
+        setMensaje("Email o contraseña incorrectos");
+      }
     }
   };
 

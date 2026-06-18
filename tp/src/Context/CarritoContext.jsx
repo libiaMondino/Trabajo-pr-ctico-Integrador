@@ -1,8 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const CarritoContext = createContext();
 
-export const CarritoProvider = ({ children }) => {
+export function CarritoProvider({ children }) {
   const [carrito, setCarrito] = useState([]);
 
   const agregarAlCarrito = (producto) => {
@@ -71,4 +71,6 @@ export const CarritoProvider = ({ children }) => {
       {children}
     </CarritoContext.Provider>
   );
-};
+}
+
+export const useCarrito = () => useContext(CarritoContext);

@@ -1,26 +1,30 @@
-import React from 'react'
+import React from 'react';
 import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CarritoContext } from "../../context/CarritoContext";
 
-
-function Navbar({setBusqueda}) {
+function Navbar({ setBusqueda }) {
 
     const navigate = useNavigate();
 
     const { carrito } = useContext(CarritoContext);
+
     const cantidadProductos = carrito.reduce(
         (acc, item) => acc + item.cantidad,
         0
     );
 
-    const handleOnSubmitSearch= (e) =>{
+    const usuario = JSON.parse(
+        localStorage.getItem("usuario")
+    );
+
+    const handleOnSubmitSearch = (e) => {
         e.preventDefault();
         navigate("/productos");
     };
-    
+
     return (
         <nav className="navbar navbar-expand-lg bg-white shadow-sm py-3">
 
@@ -55,23 +59,37 @@ function Navbar({setBusqueda}) {
                         className="form-control"
                         type="search"
                         placeholder="Buscar..."
-                        onChange={(e)=>setBusqueda(e.target.value)}
+                        onChange={(e) => setBusqueda(e.target.value)}
                     />
 
-                    <button className="btn btn-light" >
+                    <button className="btn btn-light">
                         <FaSearch />
                     </button>
 
                 </form>
 
-                <div className="d-flex gap-1">
+                <div className="d-flex gap-1 align-items-center">
 
-                    <Link to="/login" className="menu-btn icon-btn">
-                        <FaUser size={18} />
-                        <p className="m-0">Iniciar Sesión</p>
-                    </Link>
+                    {usuario ? (
+                        <>
+                            <span className="me-3">
+                                {usuario.nombre} ({usuario.rol})
+                            </span>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/login" className="menu-btn icon-btn">
+                                <FaUser size={18} />
+                                <p className="m-0">Iniciar Sesión</p>
+                            </Link>
 
-                     <Link to="/carrito" className="menu-btn icon-btn">
+                            <Link to="/registro" className="menu-btn icon-btn">
+                                <p className="m-0">Registrarse</p>
+                            </Link>
+                        </>
+                    )}
+
+                    <Link to="/carrito" className="menu-btn icon-btn">
                         <FaShoppingCart size={18} />
                         <p className="m-0">
                             Carrito ({cantidadProductos})
