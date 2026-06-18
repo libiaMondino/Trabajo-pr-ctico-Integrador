@@ -2,10 +2,19 @@ import React from 'react'
 import { FaSearch, FaUser, FaShoppingCart } from "react-icons/fa";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { CarritoContext } from "../../context/CarritoContext";
 
 
 function Navbar({setBusqueda}) {
+
     const navigate = useNavigate();
+
+    const { carrito } = useContext(CarritoContext);
+    const cantidadProductos = carrito.reduce(
+        (acc, item) => acc + item.cantidad,
+        0
+    );
 
     const handleOnSubmitSearch= (e) =>{
         e.preventDefault();
@@ -62,10 +71,11 @@ function Navbar({setBusqueda}) {
                         <p className="m-0">Iniciar Sesión</p>
                     </Link>
 
-                    <Link to="/carrito" className="menu-btn icon-btn">
+                     <Link to="/carrito" className="menu-btn icon-btn">
                         <FaShoppingCart size={18} />
-                        <p className="m-0">Carrito</p>
-                        <span>Carrito</span>
+                        <p className="m-0">
+                            Carrito ({cantidadProductos})
+                        </p>
                     </Link>
 
                 </div>
