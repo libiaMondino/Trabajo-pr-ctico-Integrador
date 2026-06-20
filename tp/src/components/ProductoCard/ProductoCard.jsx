@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import {Badge, Card, Button, Row, Col} from "react-bootstrap";
 import { Star, StarFill } from "react-bootstrap-icons";
 import "../../App.css";

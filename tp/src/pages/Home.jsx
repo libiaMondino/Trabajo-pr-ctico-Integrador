@@ -3,26 +3,30 @@ import guitarraElectrica from "/src/assets/img/img/guitarraElectrica.jpg"
 import piano from "/src/assets/img/img/piano.jpg"
 import bateria from "/src/assets/img/img/bateria.jpeg"
 import "./Home.css";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+    const navigate = useNavigate();
     return (
-        <div className="container-fluid p-0">
+        <div className = "container-fluid p-0" >
 
-            {/* Banner */}
-            <div className="banner-container">
+        {/* Banner */ }
+            < div className = "banner-container" >
                 <img
                     src={banner}
                     alt="Banner principal"
                     className="banner-img"
                 />
 
-                <button className="banner-btn">
+                <button
+                    className="banner-btn"
+                    onClick={() => navigate("productos/Musica")}>
                     Ver instrumentos
                 </button>
             </div>
 
-            {/* Productos destacados */}
-            <div className="container my-5">
+        {/* Productos destacados */ }
+        < div className = "container my-5" >
 
                 <h2 className="text-center mb-4">
                     Productos destacados
@@ -33,7 +37,7 @@ function Home() {
                     <div className="col-md-4">
                         <div className="card">
                             <img
-                                src= {guitarraElectrica}
+                                src={guitarraElectrica}
                                 className="card-img-top"
                                 alt="Producto"
                             />
@@ -42,7 +46,7 @@ function Home() {
                                     Guitarra Fender
                                 </h5>
                                 <p className="card-text">
-                                    $500.000
+                                    $1250000
                                 </p>
                             </div>
                         </div>
@@ -51,7 +55,7 @@ function Home() {
                     <div className="col-md-4">
                         <div className="card">
                             <img
-                                src= {piano}
+                                src={piano}
                                 className="card-img-top"
                                 alt="Producto"
                             />
@@ -60,7 +64,7 @@ function Home() {
                                     Piano Yamaha
                                 </h5>
                                 <p className="card-text">
-                                    $1.200.000
+                                    $92999
                                 </p>
                             </div>
                         </div>
@@ -69,7 +73,7 @@ function Home() {
                     <div className="col-md-4">
                         <div className="card">
                             <img
-                                src= {bateria}
+                                src={bateria}
                                 className="card-img-top"
                                 alt="Producto"
                             />
@@ -78,7 +82,7 @@ function Home() {
                                     Batería Pearl
                                 </h5>
                                 <p className="card-text">
-                                    $900.000
+                                    $154999
                                 </p>
                             </div>
                         </div>
@@ -86,9 +90,9 @@ function Home() {
 
                 </div>
 
-            </div>
+            </div >
 
-        </div>
+        </div >
     );
 }
 

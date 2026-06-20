@@ -7,19 +7,35 @@ export function CarritoProvider({ children }) {
 
   const agregarAlCarrito = (producto) => {
     setCarrito((carritoActual) => {
-      const yaExiste = carritoActual.find(
+      const existe = carritoActual.find(
         (item) => item.id === producto.id
       );
 
-      if (yaExiste) {
+      if (existe) {
+        // Control de stock
+        if (existe.cantidad >= producto.stock) {
+          alert("No hay más stock disponible");
+          return carritoActual;
+        }
+
         return carritoActual.map((item) =>
           item.id === producto.id
-            ? { ...item, cantidad: item.cantidad + 1 }
+            ? {
+              ...item,
+              cantidad:
+                item.cantidad + (producto.cantidad || 1),
+            }
             : item
         );
       }
 
-      return [...carritoActual, { ...producto, cantidad: 1 }];
+      return [
+        ...carritoActual,
+        {
+          ...producto,
+          cantidad: producto.cantidad || 1,
+        },
+      ];
     });
   };
 
@@ -31,11 +47,21 @@ export function CarritoProvider({ children }) {
 
   const aumentarCantidad = (id) => {
     setCarrito((carritoActual) =>
-      carritoActual.map((item) =>
-        item.id === id
-          ? { ...item, cantidad: item.cantidad + 1 }
-          : item
-      )
+      carritoActual.map((item) => {
+        if (item.id === id) {
+          if (item.cantidad >= item.stock) {
+            alert("Stock máximo alcanzado");
+            return item;
+          }
+
+          return {
+            ...item,
+            cantidad: item.cantidad + 1,
+          };
+        }
+
+        return item;
+      })
     );
   };
 
@@ -44,16 +70,20 @@ export function CarritoProvider({ children }) {
       carritoActual.map((item) =>
         item.id === id
           ? {
-              ...item,
-              cantidad: Math.max(1, item.cantidad - 1),
-            }
+            ...item,
+            cantidad: Math.max(1, item.cantidad - 1),
+          }
           : item
       )
     );
   };
 
+  const vaciarCarrito = () => {
+    setCarrito([]);
+  };
+
   const total = carrito.reduce(
-    (acc, item) => acc + item.precio * item.cantidad,
+    (acc, item) => acc + item.price * item.cantidad,
     0
   );
 
@@ -65,6 +95,7 @@ export function CarritoProvider({ children }) {
         eliminarDelCarrito,
         aumentarCantidad,
         disminuirCantidad,
+        vaciarCarrito,
         total,
       }}
     >

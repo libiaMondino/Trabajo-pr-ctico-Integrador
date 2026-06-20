@@ -1,0 +1,132 @@
+.carrito-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.carrito-titulo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #212529;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 15px;
+}
+
+.carrito-vacio {
+    text-align: center;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+.producto-carrito {
+    padding: 20px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.producto-imagen {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    background-color: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.producto-nombre {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.producto-marca {
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.producto-precio {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.cantidad-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    width: fit-content;
+}
+
+.cantidad-btn {
+    border: none;
+    background: white;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.cantidad-btn:hover {
+    background-color: #f3f3f3;
+}
+
+.cantidad-numero {
+    min-width: 40px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.btn-eliminar {
+    background-color: #58091e;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-eliminar:hover {
+    background-color: #420616;
+}
+
+.total-container {
+    margin-top: 50px;
+    border-top: 2px solid #eee;
+    padding-top: 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-texto {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.btn-finalizar {
+    background-color: #58091e;
+    color: white;
+    border: none;
+
+    padding: 8px 18px;
+    font-size: 0.9rem;
+
+    border-radius: 8px;
+    transition: 0.3s;
+
+    width: fit-content;
+    white-space: nowrap;
+}
+
+.btn-finalizar:hover {
+    background-color: #420616;
+}
