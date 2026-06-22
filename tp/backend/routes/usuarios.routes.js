@@ -6,6 +6,7 @@ import { crearUsuario, actualizarUsuario, eliminarUsuario } from "../services/us
 router.post("/registro",crearUsuario);
 
 /*Solo superAdmin*/
+/*Función verifyToken antes de las otras( + next())*/ 
 router.put("/super-admin/usuarios/:id", actualizarUsuario);
 
 router.delete("/super-admin/usuarios/:id", eliminarUsuario);

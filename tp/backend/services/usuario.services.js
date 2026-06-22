@@ -2,26 +2,24 @@
 *Hasheo de password
 *Generar validación para el cambio de rol(que sea solo el superadmin)
 */
-
-// importar el modelo de la base de datos
+import { Usuario } from "../models/Usuario";
 
 export const crearUsuario = async (req,res) => {
     const { name, email, password} = req.body;
    
     // Validaciones
-    
-    if (!name|| !email || !password){
-       return res.status(400).send("Nombre, email y contraseña son campos requeridos");
-    };
-    if(!/\S+@\S+\.\S+/.test(email)){
-        return res.status(400).send("Email no válido");
-    };
-    if(password.length < 8){
-        return res.status(400).send("La contraseña debe tener al menos 8 caracteres");
-    };
+    if (!name|| !email || !password)
+       return res.status(400).send({message: "Nombre, email y contraseña son campos requeridos"});
+
+    if(!/\S+@\S+\.\S+/.test(email))
+        return res.status(400).send({message: "Email no válido"});
+
+    if(password.length < 8)
+        return res.status(400).send({message: "La contraseña debe tener al menos 8 caracteres"});
 
     const hayEmailDuplicado = await Usuario.findOne({ where: { email: email}});
-    if(hayEmailDuplicado) return res.status(409).send("Usuario ya registrado");
+    if(hayEmailDuplicado) 
+        return res.status(409).send({message: "Usuario ya registrado"});
 
     //+++++Hay que harshear el password+++++
 
@@ -43,10 +41,17 @@ export const actualizarUsuario = async (req,res) => {
     const user = await Usuario.findByPk(id);
 
     // Validaciones
-    if (!user) return res.status(404).send("Usuario no encontrado");
-    if (!name|| !email || !password) return res.status(400).send("Nombre, email y contraseña son campos requeridos");
-    if(!/\S+@\S+\.\S+/.test(email)) return res.status(400).send("Email no válido")
-    if(password.length < 8) return res.status(400).send("La contraseña debe tener al menos 8 caracteres")
+    if (!user) 
+        return res.status(404).send({message: "Usuario no encontrado"});
+
+    if (!name|| !email || !password)
+        return res.status(400).send({message: "Nombre, email y contraseña son campos requeridos"});
+
+    if(!/\S+@\S+\.\S+/.test(email)) 
+        return res.status(400).send({message: "Email no válido"});
+
+    if(password.length < 8) 
+        return res.status(400).send({message: "La contraseña debe tener al menos 8 caracteres"})
     
     //Actualizar
     await user.update({
@@ -69,12 +74,12 @@ export const eliminarUsuario = async (req,res) =>{
     const user = await Usuario.findByPk(id);
 
     if(!user){
-        return res.status(404).send("No se encontró el usuario");
+        return res.status(404).send({message: "No se encontró el usuario" });
     }
 
     //Se elimina usuario
     await user.destroy();
 
-    res.send(`Usuario id: ${id} fue eliminado con éxito`);
+    res.send({message: `Usuario id: ${id} fue eliminado con éxito`});
 
 };
