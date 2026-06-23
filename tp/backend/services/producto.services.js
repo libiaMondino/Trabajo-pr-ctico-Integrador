@@ -1,4 +1,4 @@
-// importar el modelo de la base de datos
+import { Producto } from "../models/Producto";
 
 export const encontrarProductos = async (req,res) => {
     const { categoria }= req.params;

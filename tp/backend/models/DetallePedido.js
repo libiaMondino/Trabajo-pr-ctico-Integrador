@@ -27,7 +27,7 @@ export const DetallePedido = sequelize.define("detallePedido", {
     },
     cantidad:{
         type: DataTypes.INTEGER,
-        defaultValue: 0,
+        defaultValue: 1,
         allowNull: false,
         validate:{
             min:1
