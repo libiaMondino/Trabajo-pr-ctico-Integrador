@@ -1,3 +1,6 @@
+import { PUERTO } from "./config.js";
+import productoRoutes from "./routes/productos.routes.js"
+
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
@@ -6,6 +9,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(productoRoutes);
 
 app.get("/", (req, res) => {
   res.json({
@@ -13,6 +17,7 @@ app.get("/", (req, res) => {
   });
 });
 
+/* Cambiar
 app.get("/productos", (req, res) => {
   const productos = JSON.parse(
     fs.readFileSync("./data/productos.json")
@@ -20,7 +25,7 @@ app.get("/productos", (req, res) => {
 
   res.json(productos);
 });
-
-app.listen(3001, () => {
-  console.log("Servidor corriendo en puerto 3001");
+*/
+app.listen(PUERTO, () => {
+  console.log(`Servidor corriendo en puerto ${PUERTO}`);
 });
