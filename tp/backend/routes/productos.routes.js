@@ -4,7 +4,7 @@ import { verifyToken } from "../middleware/verifyToken.js";
 import { requireRole } from "../middleware/requireRole.js";
 const routerProductos = Router();
 
-/*RUTAS PUBLICAS*/
+/* RUTAS PUBLICAS */
 routerProductos.get("/", encontrarProductos);
 routerProductos.get("/categoria/:categoria", encontrarProductos);
 routerProductos.get("/:id", encontrarProducto);
