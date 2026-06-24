@@ -1,8 +1,10 @@
 // Falta validate Token function, solo usuarios pueden agregar al carrito
 import { Router } from "express";
-import { crearDetallePedido, actualizarDetallePedido, eliminarDetallePedido } from "../services/detallePedido.services";
+import { crearDetallePedido, actualizarDetallePedido, eliminarDetallePedido } from "../services/detallePedido.services.js";
 
-const router = Router();
-router.post("/carrito", crearDetallePedido);
-router.put("/carrito",actualizarDetallePedido);
-router.delete("/carrito",eliminarDetallePedido);
+const routerDetallePed = Router();
+routerDetallePed.post("/carrito", crearDetallePedido);
+routerDetallePed.put("/carrito",actualizarDetallePedido);
+routerDetallePed.delete("/carrito",eliminarDetallePedido);
+
+export default routerDetallePed;

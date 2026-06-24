@@ -1,21 +1,38 @@
 import { PUERTO } from "./config.js";
-import productoRoutes from "./routes/productos.routes.js"
-
-const express = require("express");
-const cors = require("cors");
-const fs = require("fs");
+import { sequelize } from "./dataBase.js";
+import routerProductos from "./routes/productos.routes.js";
+import routerDetallePed from "./routes/detallePedido.routes.js";
+import "./models/Producto.js";
+import "./models/DetallePedido.js";
+import express from "express";
+import cors from "cors";
+import fs from "fs";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(productoRoutes);
+app.use(routerProductos);
+app.use(routerDetallePed);
 
-app.get("/", (req, res) => {
-  res.json({
-    mensaje: "Backend funcionando correctamente"
+try{
+  
+  app.listen(PUERTO, () => {
+    console.log(`Servidor corriendo en puerto ${PUERTO}`);
   });
-});
+
+  await sequelize.sync();
+
+} catch (error) {
+  console.log(`Hubo un error de inicialización`);
+} finally{
+  
+  app.get("/", (req, res) => {
+    res.json({
+      mensaje: "Backend funcionando correctamente"
+    });
+  });
+}
 
 /* Cambiar
 app.get("/productos", (req, res) => {
@@ -26,6 +43,3 @@ app.get("/productos", (req, res) => {
   res.json(productos);
 });
 */
-app.listen(PUERTO, () => {
-  console.log(`Servidor corriendo en puerto ${PUERTO}`);
-});

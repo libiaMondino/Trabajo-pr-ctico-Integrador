@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../dataBase.js";
 import { Pedido } from "./Pedido.js";
 import { Producto } from "./Producto.js";
+import { Usuario } from "./Usuario.js";
 
 export const DetallePedido = sequelize.define("detallePedido", {
     pedidoId:{
@@ -24,6 +25,14 @@ export const DetallePedido = sequelize.define("detallePedido", {
         }
         //onDelete: RESTRICT
         //onUpdate: CASCADE
+    },
+    usuarioId:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references:{
+            model: Usuario,
+            key: "id"
+        }
     },
     cantidad:{
         type: DataTypes.INTEGER,

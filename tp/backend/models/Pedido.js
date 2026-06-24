@@ -17,6 +17,20 @@ export const Pedido = sequelize.define("pedido",{
             key: "id"
         }
     },
+    estado:{
+        type: DataTypes.STRING,
+        defaultValue: "Carrito",
+        validate: {
+            isIn: {
+                args: [["Carrito", "Finalizado"]]
+            }
+        }
+    },
+    fecha:{
+        type: DataTypes.DATE,
+        // Se guarda la fecha actual, al momento de crear pedido
+        defaultValue: DataTypes.NOW
+    },
     total:{
         type: DataTypes.DECIMAL(10,2),
         defaultValue: 0,

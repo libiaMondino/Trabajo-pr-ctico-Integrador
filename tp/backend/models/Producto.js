@@ -20,7 +20,12 @@ export const Producto = sequelize.define("producto", {
         allowNull: false
     }, 
     category:{
-        type: DataTypes.ENUM("Audio", "Música")
+        type: DataTypes.ENUM("Audio", "Música"),
+        validate: {
+            isIn: {
+                args: [["Música", "Audio"]]
+            }
+        }
     }, 
     rating:{
         type: DataTypes.DECIMAL,
@@ -35,7 +40,7 @@ export const Producto = sequelize.define("producto", {
     }, 
     available:{
         type: DataTypes.BOOLEAN,
-        defaultValue: true
+        defaultValue: false 
     }, 
     price:{
         type: DataTypes.DECIMAL,
