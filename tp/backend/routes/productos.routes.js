@@ -1,26 +1,35 @@
-/*LO QUE FALTA
-* Revisar las rutas de cada método(admin, superadmin,usuario)
-* Funcion verify Token
-*/ 
 import { Router } from "express";
 import { encontrarProducto, encontrarProductos, crearProducto, actualizarProducto, eliminarProducto } from "../services/producto.services.js";
+import { verifyToken } from "../middleware/verifyToken.js";
+import { requireRole } from "../middleware/requireRole.js";
 const routerProductos = Router();
 
-/*Acciones que pueden realizar todos*/
-routerProductos.get("/productos", encontrarProductos);
-routerProductos.get("/productos/categoria/:categoria", encontrarProductos);
+/*RUTAS PUBLICAS*/
+routerProductos.get("/", encontrarProductos);
+routerProductos.get("/categoria/:categoria", encontrarProductos);
+routerProductos.get("/:id", encontrarProducto);
+routerProductos.get("/categoria/:categoria/:id", encontrarProducto);
 
-routerProductos.get("/productos/:id", encontrarProducto);
-routerProductos.get("/productos/categoria/:categoria/:id", encontrarProducto);
+/*RUTAS PROTEGIDAS*/
+// crear producto (admin o super_admin)
+routerProductos.post(
+  "/",
+  verifyToken,
+  requireRole(["admin", "super_admin"]),
+  crearProducto
+);
 
-/*Solo admin y Superadmin*/
-/*Falta la función verify token antes de cada una de las funciones*/ 
-routerProductos.post("/nuevo-producto",crearProducto);
+routerProductos.patch(
+  "/:id",
+  verifyToken,
+  requireRole(["admin", "super_admin"]),
+  actualizarProducto
+);
 
-routerProductos.patch("/productos/actualizar/:id", actualizarProducto);
-routerProductos.patch("/productos/categoria/:categoria/:id", actualizarProducto);
-
-routerProductos.delete("/productos/eliminar/:id", eliminarProducto);
-routerProductos.delete("/productos/categoria/:categoria/:id", eliminarProducto);
-
+routerProductos.delete(
+  "/:id",
+  verifyToken,
+  requireRole(["admin", "super_admin"]),
+  eliminarProducto
+);
 export default routerProductos;

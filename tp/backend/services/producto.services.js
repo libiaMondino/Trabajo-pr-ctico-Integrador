@@ -44,7 +44,7 @@ export const crearProducto = async(req, res)=> {
     if(!categoriasValidas.includes(category))
         return res.status(400).send({message: "La categoría ingresada no corresponde a una categoría válida"});
     
-    if(precio < 0)
+    if(price < 0)
         return res.status(400).send({message: "El precio no puede ser menor a cero"});
 
     //Coherencia entre available y stock
