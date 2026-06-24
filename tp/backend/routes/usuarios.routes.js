@@ -11,8 +11,7 @@ routerUsuarios.post("/login", loginUsuario);
 
 /*Solo superAdmin*/
 /*Función verifyToken antes de las otras( + next())*/ 
-routerUsuarios.patch(
-    "/super-admin/usuarios/:id",
+routerUsuarios.patch("/usuarios/:id",
     verifyToken,
     actualizarUsuario
 );

@@ -2,23 +2,19 @@
 import { DetallePedido } from "../models/DetallePedido.js";
 import { Producto } from "../models/Producto.js";
 import { Pedido } from "../models/Pedido.js";
-import { Usuario } from "../models/Usuario.js";
 // 1 Pedido = 1 carrito
 // 1 Detalle Pedido = 1 Producto dentro del carrito
 
-export const crearDetallePedido= async(req,res) =>{
-    const { usuarioId, productoId, cantidad} = req.body;
-    //const usuarioId = req.user.id;
+export const crearDetallePedido= async(req,res) =>{{
+    try{
+    const { productoId, cantidad} = req.body;
+    const usuarioId = req.user.id;
     let newDetalle;
     let pedidoIdFinal;
 
     //Validaciones
     if ( !cantidad || cantidad < 0)
         return res.status(400).send({message:"Cantidad debe ser mayor a cero"});
-    
-    const usuario = await Usuario.findByPk(usuarioId);
-    if(!usuario)
-        return res.status(404).send({message: "No se encontró el usuario"});
     
     const prod = await Producto.findByPk(productoId);
     if(!prod)
@@ -42,8 +38,8 @@ export const crearDetallePedido= async(req,res) =>{
         const existeDetalle = await DetallePedido.findOne({
             where:{
             pedidoId: pedidoIdFinal,
-            productoId,
-            usuarioId
+            productoId
+            //usuarioId
             }
         })
         if(existeDetalle)
@@ -64,16 +60,25 @@ export const crearDetallePedido= async(req,res) =>{
     newDetalle = await DetallePedido.create({
     pedidoId: pedidoIdFinal,
     productoId,
-    usuarioId,
+    //usuarioId,
     cantidad,
     subtotal
     });
     res.json(newDetalle);
-};
+} catch(error) {
+    console.log(error.name);
+    console.log(error.message);
+    console.log(error.errors);
+    console.log(error.parent);
+
+    return res.status(500).json(error.message + error.parent + error.name + error.errors );
+  }
+}};
 
 export const actualizarDetallePedido = async(req,res) => {
+    try{
     const {pedidoId, productoId, cantidad} = req.body;
-    //const usuarioId = req.user.id;
+    const usuarioId = req.user.id;
     //Validaciones
     if (!pedidoId || !productoId) 
         return res.status(400).send({ message: "Faltan id pedido o id producto" });
@@ -83,6 +88,7 @@ export const actualizarDetallePedido = async(req,res) => {
     
     const pedido = await Pedido.findOne({
         where:{
+            id: pedidoId,
             usuarioId,
             estado: "Carrito" // Porque se supone que hay un solo pedido en estado Carrito por usuario
         }
@@ -93,8 +99,7 @@ export const actualizarDetallePedido = async(req,res) => {
     const detalleEncontrado = await DetallePedido.findOne({
         where:{
             pedidoId,
-            productoId
-            //iría usuarioId?
+            productoId,
         }
     })
     if(!detalleEncontrado)
@@ -119,19 +124,26 @@ export const actualizarDetallePedido = async(req,res) => {
     })
     await detalleEncontrado.save();
 
-    res.json(detalleEncontrado);
+    res.json(detalleEncontrado);} catch(error){
+         console.log(error.name);
+    console.log(error.message);
+    console.log(error.errors);
+    console.log(error.parent);
+
+    return res.status(500).json(error.message + error.parent + error.name + error.errors );
+    }
 };
 
 export const eliminarDetallePedido = async(req,res) => {
     const { pedidoId, productoId} = req.body;
-    //const usuarioId = req.user.id;
+    const usuarioId = req.user.id;
     //Validaciones
     if (!pedidoId || !productoId) 
         return res.status(400).send({ message: "Faltan id pedido o id producto" });
 
-    const pedido = await Pedido.findByPk(pedidoId);
+    const pedido = await Pedido.findOne({where:{id:pedidoId, estado:"Carrito"}});
     if (!pedido)
-        return res.status(404).send({ message: "Pedido no encontrado"});
+        return res.status(404).send({ message: "Pedido abierto no encontrado"});
 
     const detalleEncontrado = await DetallePedido.findOne({
         where:{

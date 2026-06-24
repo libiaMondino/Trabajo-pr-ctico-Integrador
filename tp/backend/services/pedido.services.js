@@ -1,11 +1,9 @@
-//Falta el JWT
 import { Pedido } from "../models/Pedido.js";
 
 // Se crea cuando se ingresa un detalle (más infromación en detallePedidos.js)
 export const actualizarPedido = async(req,res) =>{
     const {id}=req.params;
-    const {usuarioId} = req.body;
-     //const usuarioId = req.user.id;
+    const usuarioId = req.user.id;
     const pedido = await Pedido.findOne({
         where:{
             id,
@@ -22,10 +20,10 @@ export const actualizarPedido = async(req,res) =>{
     res.json(pedido);
 }
 export const eliminarPedido = async(req,res) =>{
+    try{
     const {id} = req.params;
-    const { usuarioId } = req.body;
-     //const usuarioId = req.user.id;
-    const pedido = Pedido.findOne({
+    const usuarioId = req.user.id;
+    const pedido = await Pedido.findOne({
         where:{
             id,
             usuarioId,
@@ -39,5 +37,12 @@ export const eliminarPedido = async(req,res) =>{
 
     res.status(200).send({
         message: "Pedido eliminado correctamente"
-    });
+    });} catch(error){
+        console.log(error.name);
+    console.log(error.message);
+    console.log(error.errors);
+    console.log(error.parent);
+
+    return res.status(500).json(error.message + error.parent + error.name + error.errors );
+    }
 }

@@ -1,7 +1,3 @@
-/*AGREGAR:
-*Hasheo de password
-*Generar validación para el cambio de rol(que sea solo el superadmin) JWT
-*/
 import { Usuario } from "../models/Usuario.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -69,7 +65,7 @@ export const actualizarUsuario = async (req,res) => {
     //Actualización parcial
     if(name) user.name = name;
     if(email) user.email = email;
-    if(password) user.password = password;
+    if(password) user.password = await bcrypt.hash(password,10);
     if(role) user.role = role;
 
     await user.save();

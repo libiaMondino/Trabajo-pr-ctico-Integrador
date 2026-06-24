@@ -2,7 +2,6 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../dataBase.js";
 import { Pedido } from "./Pedido.js";
 import { Producto } from "./Producto.js";
-import { Usuario } from "./Usuario.js";
 
 export const DetallePedido = sequelize.define("detallePedido", {
     pedidoId:{
@@ -11,28 +10,19 @@ export const DetallePedido = sequelize.define("detallePedido", {
         references:{
             model: Pedido,
             key:"id"
-        }
-        //onDelete: CASCADE
-        //onUpdate: CASCADE
+        },
+        onDelete: "CASCADE", // Si se elimina el pedido, se eliminan todos sus detalles
     },
     productoId:{
         type: DataTypes.INTEGER,
         // Al poner primary key en productoId y pedidoID evita que en un mismo pedido haya producto repetido
-        primaryKey: true, 
+        primaryKey:true,
         references:{
             model: Producto,
             key: "id"
         }
         //onDelete: RESTRICT
         //onUpdate: CASCADE
-    },
-    usuarioId:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references:{
-            model: Usuario,
-            key: "id"
-        }
     },
     cantidad:{
         type: DataTypes.INTEGER,
