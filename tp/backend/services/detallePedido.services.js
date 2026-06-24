@@ -1,3 +1,4 @@
+// VER LO DE JWT 
 import { DetallePedido } from "../models/DetallePedido.js";
 import { Producto } from "../models/Producto.js";
 import { Pedido } from "../models/Pedido.js";
@@ -6,8 +7,10 @@ import { Usuario } from "../models/Usuario.js";
 // 1 Detalle Pedido = 1 Producto dentro del carrito
 
 export const crearDetallePedido= async(req,res) =>{
-    const { pedidoId, usuarioId, productoId, cantidad} = req.body;
+    const { usuarioId, productoId, cantidad} = req.body;
+    //const usuarioId = req.user.id;
     let newDetalle;
+    let pedidoIdFinal;
 
     //Validaciones
     if ( !cantidad || cantidad < 0)
@@ -21,15 +24,24 @@ export const crearDetallePedido= async(req,res) =>{
     if(!prod)
         return res.status(404).send({message: "No se encontró el producto"});
     
-    //PercentageDis
-    //const subtotal = (prod.price * cantidad) - (prod.price * cantidad * );
+    //Subtotal con el descuento 
+    const precio = Number(prod.price);
+    const descuento = Number(prod.percentageDiscount);
+    const subtotal = (precio * cantidad) - (precio * cantidad * (descuento/100) );
 
-    const pedido = await Pedido.findByPk(pedidoId);
+    const pedido = await Pedido.findOne({
+        where:{
+            usuarioId,
+            estado: "Carrito" // Porque se supone que hay un solo pedido en estado Carrito por usuario
+        }
+    });
+
     if(pedido){
+        pedidoIdFinal = pedido.id; 
         //Se verifica si ya está el detalle en el pedido existente
         const existeDetalle = await DetallePedido.findOne({
             where:{
-            pedidoId,
+            pedidoId: pedidoIdFinal,
             productoId,
             usuarioId
             }
@@ -37,7 +49,7 @@ export const crearDetallePedido= async(req,res) =>{
         if(existeDetalle)
             return res.status(400).send({message:"El producto ya está ingresado en el pedido"});
         //Si no existe, se cambia el total del pedido
-        pedido.total = pedido.total + subtotal;
+        pedido.total = Number(pedido.total) + subtotal;
         await pedido.save();
 
     } else{
@@ -45,12 +57,12 @@ export const crearDetallePedido= async(req,res) =>{
         usuarioId,
         total : subtotal
         })
-        pedidoId = newPedido.id;
+        pedidoIdFinal = newPedido.id;
     } 
 
     // se crea detalle
     newDetalle = await DetallePedido.create({
-    pedidoId,
+    pedidoId: pedidoIdFinal,
     productoId,
     usuarioId,
     cantidad,
@@ -61,18 +73,28 @@ export const crearDetallePedido= async(req,res) =>{
 
 export const actualizarDetallePedido = async(req,res) => {
     const {pedidoId, productoId, cantidad} = req.body;
-
+    //const usuarioId = req.user.id;
     //Validaciones
     if (!pedidoId || !productoId) 
         return res.status(400).send({ message: "Faltan id pedido o id producto" });
     
     if ( !cantidad || cantidad<0)
         return res.status(400).send({message:"Cantidad debe ser mayor a cero"});
+    
+    const pedido = await Pedido.findOne({
+        where:{
+            usuarioId,
+            estado: "Carrito" // Porque se supone que hay un solo pedido en estado Carrito por usuario
+        }
+    });
+    if (!pedido)
+        return res.status(404).send({ message: "Pedido no encontrado"});
 
     const detalleEncontrado = await DetallePedido.findOne({
         where:{
             pedidoId,
             productoId
+            //iría usuarioId?
         }
     })
     if(!detalleEncontrado)
@@ -82,9 +104,15 @@ export const actualizarDetallePedido = async(req,res) => {
     if(!productoEncontrado)
         return res.status(404).send({message:"Producto no encontrado"});
 
+    //Cálculo Subtotal
+    const precio = Number(productoEncontrado.price);
+    const descuento = Number(productoEncontrado.percentageDiscount);
+    const newSubtotal = (precio * cantidad) - (precio * cantidad * (descuento/100) ); 
 
-    const newSubtotal = cantidad * productoEncontrado.price; 
+    pedido.total = Number(pedido.total) - Number(detalleEncontrado.subtotal) + newSubtotal;
+    await pedido.save();
 
+    // Actualización Detalle
     await detalleEncontrado.update({
         cantidad,
         subtotal: newSubtotal,
@@ -96,10 +124,15 @@ export const actualizarDetallePedido = async(req,res) => {
 
 export const eliminarDetallePedido = async(req,res) => {
     const { pedidoId, productoId} = req.body;
-    
+    //const usuarioId = req.user.id;
+    //Validaciones
     if (!pedidoId || !productoId) 
         return res.status(400).send({ message: "Faltan id pedido o id producto" });
-    
+
+    const pedido = await Pedido.findByPk(pedidoId);
+    if (!pedido)
+        return res.status(404).send({ message: "Pedido no encontrado"});
+
     const detalleEncontrado = await DetallePedido.findOne({
         where:{
             pedidoId,
@@ -109,6 +142,8 @@ export const eliminarDetallePedido = async(req,res) => {
     if(!detalleEncontrado) 
         return res.status(404).send({message: "Producto no encontrado en el pedido"});
 
+    pedido.total= Number(pedido.total) - Number(detalleEncontrado.subtotal);
+    await pedido.save();
     await detalleEncontrado.destroy();
 
     res.send({message:`Producto id: ${productoId} eliminado con éxito del pedido`});

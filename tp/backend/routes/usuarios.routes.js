@@ -2,11 +2,14 @@
 import { Router } from "express";
 import { crearUsuario, actualizarUsuario, eliminarUsuario } from "../services/usuario.services";
 
+const routerUsuarios = Router();
 
-router.post("/registro",crearUsuario);
+routerUsuarios.post("/registro",crearUsuario);
 
 /*Solo superAdmin*/
 /*Función verifyToken antes de las otras( + next())*/ 
-router.put("/super-admin/usuarios/:id", actualizarUsuario);
+routerUsuarios.patch("/super-admin/usuarios/:id", actualizarUsuario);
 
-router.delete("/super-admin/usuarios/:id", eliminarUsuario);
+routerUsuarios.delete("/super-admin/usuarios/:id", eliminarUsuario);
+
+export default routerUsuarios;
