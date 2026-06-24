@@ -1,6 +1,6 @@
 /*AGREGAR:
 *Hasheo de password
-*Generar validación para el cambio de rol(que sea solo el superadmin)
+*Generar validación para el cambio de rol(que sea solo el superadmin) JWT
 */
 import { Usuario } from "../models/Usuario";
 
@@ -44,22 +44,20 @@ export const actualizarUsuario = async (req,res) => {
     if (!user) 
         return res.status(404).send({message: "Usuario no encontrado"});
 
-    if (!name|| !email || !password)
-        return res.status(400).send({message: "Nombre, email y contraseña son campos requeridos"});
-
-    if(!/\S+@\S+\.\S+/.test(email)) 
+    if(email && !/\S+@\S+\.\S+/.test(email)) 
         return res.status(400).send({message: "Email no válido"});
-
-    if(password.length < 8) 
+    
+    if(password && password.length < 8) 
         return res.status(400).send({message: "La contraseña debe tener al menos 8 caracteres"})
     
-    //Actualizar
-    await user.update({
-        name,
-        email,
-        password,
-        role
-    });
+    if(role && req.user.role !== "super_admin") 
+        return res.status(403).send({message: "No tenés permisos para modificar este campo"});
+
+    //Actualización parcial
+    if(name) user.name = name;
+    if(email) user.email = email;
+    if(password) user.password = password;
+    if(role) user.role = role;
 
     await user.save();
 
