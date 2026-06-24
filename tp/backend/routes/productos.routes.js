@@ -1,19 +1,26 @@
 /*LO QUE FALTA
 * Revisar las rutas de cada método(admin, superadmin,usuario)
+* Funcion verify Token
 */ 
 import { Router } from "express";
-import { encontrarProducto, encontrarProductos, crearProducto, actualizarProducto, eliminarProducto } from "../services/producto.services";
-const router = Router();
+import { encontrarProducto, encontrarProductos, crearProducto, actualizarProducto, eliminarProducto } from "../services/producto.services.js";
+const routerProductos = Router();
 
 /*Acciones que pueden realizar todos*/
-router.get("/productos/:categoria?", encontrarProductos);
-router.get("/productos/:categoria?/:id", encontrarProducto);
+routerProductos.get("/productos", encontrarProductos);
+routerProductos.get("/productos/categoria/:categoria", encontrarProductos);
 
-/*Solo admin y Superadmin*/ 
-router.post("/nuevo-producto",crearProducto);
+routerProductos.get("/productos/:id", encontrarProducto);
+routerProductos.get("/productos/categoria/:categoria/:id", encontrarProducto);
 
-router.put("/productos/:categoria?/:id", actualizarProducto);
+/*Solo admin y Superadmin*/
+/*Falta la función verify token antes de cada una de las funciones*/ 
+routerProductos.post("/nuevo-producto",crearProducto);
 
-router.delete("/productos/:categoria?/:id", eliminarProducto);
+routerProductos.patch("/productos/actualizar/:id", actualizarProducto);
+routerProductos.patch("/productos/categoria/:categoria/:id", actualizarProducto);
 
-export default router;
+routerProductos.delete("/productos/eliminar/:id", eliminarProducto);
+routerProductos.delete("/productos/categoria/:categoria/:id", eliminarProducto);
+
+export default routerProductos;
