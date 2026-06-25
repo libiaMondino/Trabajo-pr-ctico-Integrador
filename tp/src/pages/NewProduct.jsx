@@ -1,11 +1,17 @@
 import { useState } from "react";
 
-function NewProduct() {
+  function NewProduct() {
   const [producto, setProducto] = useState({
-    id: Date.now(),
     name: "",
-    price: "",
+    type: "",
+    brand: "",
     category: "",
+    imgUrl: "",
+    price: "",
+    percentageDiscount: "",
+    stock: "",
+    rating: "",
+    description: ""
   });
 
   const [mensaje, setMensaje] = useState("");
@@ -17,25 +23,59 @@ function NewProduct() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const productosGuardados =
-      JSON.parse(localStorage.getItem("productos")) || [];
+    const payload = {
+      name: producto.name,
+      type: producto.type,
+      brand: producto.brand,
+      category: producto.category,
+      imgUrl: producto.imgUrl,
+      price: Number(producto.price),
+      percentageDiscount: Number(producto.percentageDiscount),
+      stock: Number(producto.stock),
+      rating: Number(producto.rating),
+      description: producto.description
+    };
 
-    const nuevosProductos = [...productosGuardados, producto];
+    try {
+      const res = await fetch("http://localhost:3001/productos/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        },
+        body: JSON.stringify(payload)
+      });
 
-    localStorage.setItem("productos", JSON.stringify(nuevosProductos));
+      const data = await res.json();
 
-    setMensaje("Producto agregado correctamente");
+      if (!res.ok) {
+        setMensaje(data.message || "Error al crear producto");
+        return;
+      }
 
-    setProducto({
-      id: Date.now(),
-      name: "",
-      price: "",
-      category: "",
-    });
+      setMensaje("Producto agregado correctamente");
+
+      setProducto({
+        name: "",
+        type: "",
+        brand: "",
+        category: "",
+        imgUrl: "",
+        price: "",
+        percentageDiscount: "",
+        stock: "",
+        rating: "",
+        description: ""
+      });
+
+    } catch (error) {
+      setMensaje("Error de conexión con el servidor");
+    }
   };
+
 
   return (
     <div className="container mt-4">
@@ -48,18 +88,52 @@ function NewProduct() {
           value={producto.name}
           onChange={handleChange}
         />
-
+        <input
+          name="type"
+          placeholder="Tipo"
+          value={producto.type}
+          onChange={handleChange}
+        />
+        <input
+          name="brand"
+          placeholder="Marca"
+          value={producto.brand}
+          onChange={handleChange}
+        />
+        <input
+          name="category"
+          placeholder="Categoría"
+          value={producto.category}
+          onChange={handleChange}
+        />
+        <input
+          name="imgUrl"
+          placeholder="URL de imágen"
+          value={producto.imgUrl}
+          onChange={handleChange}
+        />
         <input
           name="price"
           placeholder="Precio"
           value={producto.price}
           onChange={handleChange}
         />
-
         <input
-          name="category"
-          placeholder="Categoría"
-          value={producto.category}
+          name="percentageDiscount"
+          placeholder="percentageDiscount"
+          value={producto.percentageDiscount}
+          onChange={handleChange}
+        />
+        <input
+          name="stock"
+          placeholder="Stock"
+          value={producto.stock}
+          onChange={handleChange}
+        />
+        <input
+          name="description"
+          placeholder="Descripción"
+          value={producto.description}
           onChange={handleChange}
         />
 

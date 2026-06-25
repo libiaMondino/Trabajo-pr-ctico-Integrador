@@ -63,6 +63,18 @@ function AdminProductos() {
 
   const guardarEdicion = async () => {
     try {
+      const payload = { // = carga útil
+        name: editando.name,
+        type: editando.type,
+        brand: editando.brand,
+        category: editando.category,
+        imgUrl: editando.imgUrl,
+        price: Number(editando.price),
+        percentageDiscount: Number(editando.percentageDiscount),
+        stock: Number(editando.stock),
+        rating: Number(editando.rating),
+        description: editando.description
+      };
       const token = localStorage.getItem("token");
 
       const response = await fetch(
@@ -73,7 +85,7 @@ function AdminProductos() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(editando),
+          body: JSON.stringify(payload),
         }
       );
 
@@ -97,8 +109,15 @@ function AdminProductos() {
       {productos.map((p) => (
         <div key={p.id} className="border p-2 mb-2">
           <h4>{p.name}</h4>
-          <p>${p.price}</p>
+          <p>{p.type}</p>
+          <p>{p.brand}</p>
           <p>{p.category}</p>
+          <p>{p.rating}</p>
+          <p>{p.imgUrl}</p>
+          <p>${p.price}</p>
+          <p>{p.percentageDiscount}</p>
+          <p>{p.stock}</p>
+          <p>{p.description}</p>
 
           <button onClick={() => eliminarProducto(p.id)}>
             Eliminar
@@ -115,22 +134,59 @@ function AdminProductos() {
           <h3>Editar Producto</h3>
 
           <input
-            name="name"
-            value={editando.name}
-            onChange={handleChange}
-          />
-
-          <input
-            name="price"
-            value={editando.price}
-            onChange={handleChange}
-          />
-
-          <input
-            name="category"
-            value={editando.category}
-            onChange={handleChange}
-          />
+          name="name"
+          placeholder="Nombre"
+          value={editando.name}
+          onChange={handleChange}
+        />
+        <input
+          name="type"
+          placeholder="Tipo"
+          value={editando.type}
+          onChange={handleChange}
+        />
+        <input
+          name="brand"
+          placeholder="Marca"
+          value={editando.brand}
+          onChange={handleChange}
+        />
+        <input
+          name="category"
+          placeholder="Categoría"
+          value={editando.category}
+          onChange={handleChange}
+        />
+        <input
+          name="imgUrl"
+          placeholder="URL de imágen"
+          value={editando.imgUrl}
+          onChange={handleChange}
+        />
+        <input
+          name="price"
+          placeholder="Precio"
+          value={editando.price}
+          onChange={handleChange}
+        />
+        <input
+          name="percentageDiscount"
+          placeholder="percentageDiscount"
+          value={editando.percentageDiscount}
+          onChange={handleChange}
+        />
+        <input
+          name="stock"
+          placeholder="Stock"
+          value={editando.stock}
+          onChange={handleChange}
+        />
+        <input
+          name="description"
+          placeholder="Descripción"
+          value={editando.description}
+          onChange={handleChange}
+        />
 
           <button onClick={guardarEdicion}>
             Guardar cambios
