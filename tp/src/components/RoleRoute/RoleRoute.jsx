@@ -2,16 +2,17 @@ import { Navigate } from "react-router-dom";
 
 function RoleRoute({ children, allowedRoles }) {
 
-  const usuario = JSON.parse(
-    localStorage.getItem("usuario")
-  );
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
-  if (!usuario) {
+  // no logueado
+  if (!token) {
     return <Navigate to="/login" />;
   }
 
-  if (!allowedRoles.includes(usuario.rol)) {
-    return <h2>No tiene permisos para acceder</h2>;
+  // sin permisos
+  if (!allowedRoles.includes(role)) {
+    return <h2>No tenés permisos para acceder</h2>;
   }
 
   return children;

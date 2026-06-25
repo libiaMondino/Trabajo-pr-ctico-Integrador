@@ -8,6 +8,8 @@ import { CarritoContext } from "../../Context/CarritoContext";
 function Navbar({ setBusqueda }) {
 
     const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
 
     const { carrito } = useContext(CarritoContext);
 
@@ -73,23 +75,7 @@ function Navbar({ setBusqueda }) {
 
                 <div className="d-flex gap-1 align-items-center">
 
-                    {usuario ? (
-                        <>
-                            <span className="me-3">
-                                {usuario.nombre} ({usuario.rol})
-                            </span>
-
-                            <button
-                                className="btn btn-danger btn-sm"
-                                onClick={() => {
-                                    localStorage.removeItem("usuario");
-                                    window.location.reload();
-                                }}
-                            >
-                                Cerrar sesión
-                            </button>
-                        </>
-                    ) : (
+                    {!token ? (
                         <>
                             <Link to="/login" className="menu-btn icon-btn">
                                 <FaUser size={18} />
@@ -100,20 +86,47 @@ function Navbar({ setBusqueda }) {
                                 <p className="m-0">Registrarse</p>
                             </Link>
                         </>
-                    )}
+                    ) : (
+                        <>
+                            {/* PANEL ADMIN */}
+                            {(role === "admin" || role === "super_admin") && (
+                                <Link to="/admin" className="menu-btn icon-btn">
+                                    <p className="m-0">Panel Admin</p>
+                                </Link>
+                            )}
 
-                    <Link to="/carrito" className="menu-btn icon-btn">
-                        <FaShoppingCart size={18} />
-                        <p className="m-0">
-                            Carrito ({cantidadProductos})
-                        </p>
-                    </Link>
+                            {/* SOLO SUPER ADMIN */}
+                            {role === "super_admin" && (
+                                <Link to="/usuarios" className="menu-btn icon-btn">
+                                    <p className="m-0">Usuarios</p>
+                                </Link>
+                            )}
+
+                            {/* CERRAR SESIÓN */}
+                            <button
+                                className="btn btn-danger btn-sm"
+                                onClick={() => {
+                                    localStorage.clear();
+                                    window.location.href = "/";
+                                }}
+                            >
+                                Cerrar sesión
+                            </button>
+                        </>
+                    )}
 
                 </div>
 
+                <Link to="/carrito" className="menu-btn icon-btn">
+                    <FaShoppingCart size={18} />
+                    <p className="m-0">
+                        Carrito ({cantidadProductos})
+                    </p>
+                </Link>
+
             </div>
 
-        </nav>
+        </nav >
     );
 }
 

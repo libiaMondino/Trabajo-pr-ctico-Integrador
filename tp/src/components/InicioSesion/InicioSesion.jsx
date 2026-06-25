@@ -37,107 +37,128 @@ function InicioSesion() {
     return nuevosErrores;
   };
 
-  const manejarSubmit = (e) => {
+  const manejarSubmit = async (e) => {
     e.preventDefault();
 
     const erroresEncontrados = validar();
     setErrores(erroresEncontrados);
 
-    if (Object.keys(erroresEncontrados).length === 0) {
-      setMensaje("Inicio de sesión exitoso");
-      localStorage.setItem("usuario", JSON.stringify({
-        email: formulario.email,
-        rol: "usuario"
-        })
-      );
-      console.log(formulario);const usuarioGuardado = JSON.parse(
-      localStorage.getItem("usuarioRegistrado"));
-
-      if (usuarioGuardado && usuarioGuardado.email === formulario.email && usuarioGuardado.password === formulario.password) {
-        localStorage.setItem("usuario", JSON.stringify(usuarioGuardado));
-
-        setMensaje("Inicio de sesión exitoso");
-      } else {
-        setMensaje("Email o contraseña incorrectos");
-      }
+    if (Object.keys(erroresEncontrados).length > 0) {
+      return;
     }
+
+    try {
+      const response = await fetch(
+        "http://localhost:3001/usuarios/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formulario.email,
+            password: formulario.password,
+
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMensaje(data.message);
+        return;
+      }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+
+      setMensaje("Inicio de sesión exitoso");
+      window.location.href = "/";
+      console.log("Token:", data.token);
+
+    } catch (error) {
+      console.error(error);
+      setMensaje("Error al conectar con el servidor");
+    }
+
   };
 
   return (
-  <div className="login-container">
+    <div className="login-container">
 
-    <div className="login-card">
+      <div className="login-card">
 
-      <h1 className="login-title">
-        Iniciar Sesión
-      </h1>
+        <h1 className="login-title">
+          Iniciar Sesión
+        </h1>
 
-      <form onSubmit={manejarSubmit}>
+        <form onSubmit={manejarSubmit}>
 
-        <div className="login-input">
-          <label className="form-label">
-            Email
-          </label>
+          <div className="login-input">
+            <label className="form-label">
+              Email
+            </label>
 
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            value={formulario.email}
-            onChange={manejarCambio}
-          />
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              value={formulario.email}
+              onChange={manejarCambio}
+            />
 
-          {errores.email &&
-            <p className="error-text">
-              {errores.email}
-            </p>
-          }
-        </div>
+            {errores.email &&
+              <p className="error-text">
+                {errores.email}
+              </p>
+            }
+          </div>
 
-        <div className="login-input">
-          <label className="form-label">
-            Contraseña
-          </label>
+          <div className="login-input">
+            <label className="form-label">
+              Contraseña
+            </label>
 
-          <input
-            type="password"
-            name="password"
-            className="form-control"
-            value={formulario.password}
-            onChange={manejarCambio}
-          />
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              value={formulario.password}
+              onChange={manejarCambio}
+            />
 
-          {errores.password &&
-            <p className="error-text">
-              {errores.password}
-            </p>
-          }
-        </div>
+            {errores.password &&
+              <p className="error-text">
+                {errores.password}
+              </p>
+            }
+          </div>
 
-        <button
-          type="submit"
-          className="btn login-btn text-black">
-          Ingresar
-        </button>
-        <p className="text-center mt-3">
-          ¿No tenés cuenta?
-        <Link to="/registro">
-          Registrate
-        </Link>
-        </p>
+          <button
+            type="submit"
+            className="btn login-btn text-black">
+            Ingresar
+          </button>
+          <p className="text-center mt-3">
+            ¿No tenés cuenta?
+            <Link to="/registro">
+              Registrate
+            </Link>
+          </p>
 
-      </form>
+        </form>
 
-      {mensaje &&
-        <p className="success-text">
-          {mensaje}
-        </p>
-      }
+        {mensaje &&
+          <p className="success-text">
+            {mensaje}
+          </p>
+        }
+
+      </div>
 
     </div>
-
-  </div>
-);
+  );
 }
 
 export default InicioSesion;
