@@ -35,14 +35,14 @@ function App() {
             <AdminPanel />
           </RoleRoute>
         } />
-        <Route path="/super-admin" element={
+        <Route path="/super_admin" element={
           <RoleRoute allowedRoles={["super_admin"]}>
             <SuperAdminPanel />
           </RoleRoute>
         } />
 
-        <Route path="/admin/productos" element={<RoleRoute allowedRoles={["admin", "super-admin"]}><AdminProductos /></RoleRoute>} />
-        <Route path="/admin/nuevo" element={<RoleRoute allowedRoles={["admin", "super-admin"]}><NewProduct /></RoleRoute>} />
+        <Route path="/admin/productos" element={<RoleRoute allowedRoles={["admin", "super_admin"]}><AdminProductos /></RoleRoute>} />
+        <Route path="/admin/nuevo" element={<RoleRoute allowedRoles={["admin", "super_admin"]}><NewProduct /></RoleRoute>} />
       </Routes>
 
     </>

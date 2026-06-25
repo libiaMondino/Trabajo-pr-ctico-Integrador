@@ -25,7 +25,7 @@ routerUsuarios.patch("/usuarios/:id",
 );
 
 routerUsuarios.delete(
-    "/super-admin/usuarios/:id",
+    "/super_admin/usuarios/:id",
     verifyToken,
     requireRole("super_admin"),
     eliminarUsuario
