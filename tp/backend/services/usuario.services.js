@@ -42,31 +42,31 @@ export const crearUsuario = async (req, res) => {
     return res.status(201).json(newUsuario);
 };
 
-export const actualizarUsuario = async (req,res) => {
+export const actualizarUsuario = async (req, res) => {
     const { id } = req.params;
-    const { name, email, password, role} = req.body;
+    const { name, email, password, role } = req.body;
 
     // Encontrar usuario
     const user = await Usuario.findByPk(id);
 
     // Validaciones
-    if (!user) 
-        return res.status(404).send({message: "Usuario no encontrado"});
+    if (!user)
+        return res.status(404).send({ message: "Usuario no encontrado" });
 
-    if(email && !/\S+@\S+\.\S+/.test(email)) 
-        return res.status(400).send({message: "Email no válido"});
-    
-    if(password && password.length < 8) 
-        return res.status(400).send({message: "La contraseña debe tener al menos 8 caracteres"})
-    
-    if(role && req.user.role !== "super_admin") 
-        return res.status(403).send({message: "No tenés permisos para modificar este campo"});
+    if (email && !/\S+@\S+\.\S+/.test(email))
+        return res.status(400).send({ message: "Email no válido" });
+
+    if (password && password.length < 8)
+        return res.status(400).send({ message: "La contraseña debe tener al menos 8 caracteres" })
+
+    if (role && req.user.role !== "super_admin")
+        return res.status(403).send({ message: "No tenés permisos para modificar este campo" });
 
     //Actualización parcial
-    if(name) user.name = name;
-    if(email) user.email = email;
-    if(password) user.password = await bcrypt.hash(password,10);
-    if(role) user.role = role;
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (password) user.password = await bcrypt.hash(password, 10);
+    if (role) user.role = role;
 
     await user.save();
 
@@ -74,20 +74,20 @@ export const actualizarUsuario = async (req,res) => {
 
 };
 
-export const eliminarUsuario = async (req,res) =>{
+export const eliminarUsuario = async (req, res) => {
     const { id } = req.params;
-    
+
     //Encontrar Usuario
     const user = await Usuario.findByPk(id);
 
-    if(!user){
-        return res.status(404).send({message: "No se encontró el usuario" });
+    if (!user) {
+        return res.status(404).send({ message: "No se encontró el usuario" });
     }
 
     //Se elimina usuario
     await user.destroy();
 
-    res.send({message: `Usuario id: ${id} fue eliminado con éxito`});
+    res.send({ message: `Usuario id: ${id} fue eliminado con éxito` });
 
 };
 
@@ -138,4 +138,18 @@ export const loginUsuario = async (req, res) => {
         role: user.role
     });
     console.log(user.role);
+};
+
+export const obtenerUsuarios = async (req, res) => {
+    try {
+        const usuarios = await Usuario.findAll({
+            attributes: ["id", "name", "email", "role"]
+        });
+
+        res.json(usuarios);
+    } catch (error) {
+        res.status(500).send({
+            message: "Error al obtener usuarios"
+        });
+    }
 };
