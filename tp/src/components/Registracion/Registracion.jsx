@@ -24,17 +24,17 @@ function Registro() {
     let nuevosErrores = {};
 
     <div>
-    <label>Rol:</label>
+      <label>Rol:</label>
 
-    <select
-      name="rol"
-      value={formulario.rol}
-      onChange={manejarCambio}
-    >
-      <option value="usuario">Usuario</option>
-      <option value="admin">Admin</option>
-      <option value="super-admin">Super Admin</option>
-    </select>
+      <select
+        name="rol"
+        value={formulario.rol}
+        onChange={manejarCambio}
+      >
+        <option value="usuario">Usuario</option>
+        <option value="admin">Admin</option>
+        <option value="super-admin">Super Admin</option>
+      </select>
     </div>
 
     if (!formulario.nombre.trim()) {
@@ -57,116 +57,143 @@ function Registro() {
     return nuevosErrores;
   };
 
-  const manejarSubmit = (e) => {
+  const manejarSubmit = async (e) => {
     e.preventDefault();
 
     const erroresEncontrados = validar();
     setErrores(erroresEncontrados);
 
-    if (Object.keys(erroresEncontrados).length === 0) {
-      localStorage.setItem("usuarioRegistrado", JSON.stringify(formulario));
+    if (Object.keys(erroresEncontrados).length > 0) return;
+
+    try {
+      const response = await fetch("http://localhost:3001/usuarios/registro", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formulario.nombre,
+          email: formulario.email,
+          password: formulario.password
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMensaje(data.message);
+        return;
+      }
+
       setMensaje("Registro exitoso");
+      console.log("Usuario creado:", data);
+      
+      window.location.href = "/login";
+    } catch (error) {
+      console.error(error);
+      setMensaje("Error al registrar usuario");
     }
+    
   };
 
   return (
-  <div className="login-container">
+    <div className="login-container">
 
-    <div className="login-card">
+      <div className="login-card">
 
-      <h1 className="login-title">
-        Registro de Usuario
-      </h1>
+        <h1 className="login-title">
+          Registro de Usuario
+        </h1>
 
-      <form onSubmit={manejarSubmit}>
+        <form onSubmit={manejarSubmit}>
 
-        <div className="login-input">
-          <label className="form-label">
-            Nombre
-          </label>
+          <div className="login-input">
+            <label className="form-label">
+              Nombre
+            </label>
 
-          <input
-            type="text"
-            name="nombre"
-            className="form-control"
-            value={formulario.nombre}
-            onChange={manejarCambio}
-          />
+            <input
+              type="text"
+              name="nombre"
+              className="form-control"
+              value={formulario.nombre}
+              onChange={manejarCambio}
+            />
 
-          {errores.nombre && (
-            <p className="error-text">
-              {errores.nombre}
-            </p>
-          )}
-        </div>
+            {errores.nombre && (
+              <p className="error-text">
+                {errores.nombre}
+              </p>
+            )}
+          </div>
 
-        <div className="login-input">
-          <label className="form-label">
-            Email
-          </label>
+          <div className="login-input">
+            <label className="form-label">
+              Email
+            </label>
 
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            value={formulario.email}
-            onChange={manejarCambio}
-          />
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              value={formulario.email}
+              onChange={manejarCambio}
+            />
 
-          {errores.email && (
-            <p className="error-text">
-              {errores.email}
-            </p>
-          )}
-        </div>
+            {errores.email && (
+              <p className="error-text">
+                {errores.email}
+              </p>
+            )}
+          </div>
 
-        <div className="login-input">
-          <label className="form-label">
-            Contraseña
-          </label>
+          <div className="login-input">
+            <label className="form-label">
+              Contraseña
+            </label>
 
-          <input
-            type="password"
-            name="password"
-            className="form-control"
-            value={formulario.password}
-            onChange={manejarCambio}
-          />
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              value={formulario.password}
+              onChange={manejarCambio}
+            />
 
-          {errores.password && (
-            <p className="error-text">
-              {errores.password}
-            </p>
-          )}
-        </div>
+            {errores.password && (
+              <p className="error-text">
+                {errores.password}
+              </p>
+            )}
+          </div>
 
-        <button
-          type="submit"
-          className="btn login-btn text-black"
-        >
-          Registrarse
-        </button>
+          <button
+            type="submit"
+            className="btn login-btn text-black"
+          >
+            Registrarse
+          </button>
 
-        <p className="text-center mt-3">
-          ¿Ya tenés cuenta?
+          <p className="text-center mt-3">
+            ¿Ya tenés cuenta?
 
-        <Link to="/login">
-          Iniciá sesión
-        </Link>
-        </p>
+            <Link to="/login">
+              Iniciá sesión
+            </Link>
+          </p>
 
-      </form>
+        </form>
 
-      {mensaje && (
-        <p className="success-text">
-          {mensaje}
-        </p>
-      )}
+        {mensaje && (
+          <p className="success-text">
+            {mensaje}
+          </p>
+        )}
+
+      </div>
 
     </div>
-
-  </div>
-);
+  );
 }
 
 

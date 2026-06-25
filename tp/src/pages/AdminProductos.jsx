@@ -3,45 +3,50 @@ import { useEffect, useState } from "react";
 function AdminProductos() {
   const [productos, setProductos] = useState([]);
   const [editando, setEditando] = useState(null);
-  const [nuevoProducto, setNuevoProducto] = useState({
-    name: "",
-    price: "",
-    category: ""
-  });
 
   useEffect(() => {
-    const existe = localStorage.getItem("productos");
-
-    if (!existe) {
-        localStorage.setItem(
-            "productos",
-            JSON.stringify([
-                {
-                  id: 1,
-                  name: "Guitarra",
-                  price: 1000,
-                  category: "musica",
-                },
-                {
-                  id: 2,
-                  name: "Batería",
-                  price: 2000,
-                  category: "musica",
-                },
-            ])
-        );
-    }
-
-    const data =
-      JSON.parse(localStorage.getItem("productos")) || [];
-    setProductos(data);
+    obtenerProductos();
   }, []);
 
+  const obtenerProductos = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:3001/productos"
+      );
+
+      const data = await response.json();
+
+      setProductos(data);
+    } catch (error) {
+      console.error("Error al obtener productos:", error);
+    }
+  };
+
   // ELIMINAR
-  const eliminarProducto = (id) => {
-    const nuevos = productos.filter((p) => p.id !== id);
-    setProductos(nuevos);
-    localStorage.setItem("productos", JSON.stringify(nuevos));
+  const eliminarProducto = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch(
+        `http://localhost:3001/productos/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.json();
+        alert(error.message);
+        return;
+      }
+
+      obtenerProductos();
+    } catch (error) {
+      console.error("Error al eliminar producto:", error);
+    }
   };
 
   // EDITAR
@@ -56,21 +61,33 @@ function AdminProductos() {
     });
   };
 
-  const handleNuevoChange = (e) => {
-  setNuevoProducto({
-    ...nuevoProducto,
-    [e.target.name]: e.target.value
-  });
-};
+  const guardarEdicion = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-  const guardarEdicion = () => {
-    const nuevos = productos.map((p) =>
-      p.id === editando.id ? editando : p
-    );
+      const response = await fetch(
+        `http://localhost:3001/productos/${editando.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(editando),
+        }
+      );
 
-    setProductos(nuevos);
-    localStorage.setItem("productos", JSON.stringify(nuevos));
-    setEditando(null);
+      if (!response.ok) {
+        const error = await response.json();
+        alert(error.message);
+        return;
+      }
+
+      obtenerProductos();
+      setEditando(null);
+    } catch (error) {
+      console.error("Error al actualizar producto:", error);
+    }
   };
 
   return (
@@ -93,7 +110,6 @@ function AdminProductos() {
         </div>
       ))}
 
-      {/* FORM MODIFICACIÓN */}
       {editando && (
         <div className="border p-3 mt-4">
           <h3>Editar Producto</h3>

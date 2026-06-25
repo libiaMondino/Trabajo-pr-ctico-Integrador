@@ -30,7 +30,7 @@ export const crearUsuario = async (req, res) => {
             message: "Usuario ya registrado"
         });
 
-    // 🔐 HASH DE PASSWORD
+    //  HASH DE PASSWORD
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUsuario = await Usuario.create({
@@ -121,7 +121,7 @@ export const loginUsuario = async (req, res) => {
         });
     }
 
-    // 🔐 GENERAR TOKEN
+    //  GENERAR TOKEN
     const token = jwt.sign(
         {
             id: user.id,
@@ -134,7 +134,8 @@ export const loginUsuario = async (req, res) => {
 
     return res.json({
         message: "Login exitoso",
-        token
+        token,
+        role: user.role
     });
     console.log(user.role);
 };
