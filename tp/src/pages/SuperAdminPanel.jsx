@@ -44,7 +44,7 @@ function SuperAdminPanel() {
   };
 
   const eliminarUsuario = async (id) => {
-    await fetch(`http://localhost:3001/usuarios/super-admin/usuarios/${id}`, {
+    await fetch(`http://localhost:3001/usuarios/super_admin/usuarios/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,

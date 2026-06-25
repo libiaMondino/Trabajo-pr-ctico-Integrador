@@ -51,6 +51,7 @@ function AdminProductos() {
 
   // EDITAR
   const iniciarEdicion = (producto) => {
+    console.log("EDITANDO", producto);
     setEditando(producto);
   };
 
@@ -101,7 +102,7 @@ function AdminProductos() {
       console.error("Error al actualizar producto:", error);
     }
   };
-
+  console.log("Estado editando:", editando);
   return (
     <div className="container mt-4">
       <h2>ABM Productos</h2>
@@ -128,7 +129,7 @@ function AdminProductos() {
           </button>
         </div>
       ))}
-
+      
       {editando && (
         <div className="border p-3 mt-4">
           <h3>Editar Producto</h3>

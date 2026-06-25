@@ -77,7 +77,7 @@ function InicioSesion() {
       const role = data.role;
 
       if (role === "super_admin") {
-        window.location.href = "/super-admin";
+        window.location.href = "/super_admin";
       } else if (role === "admin") {
         window.location.href = "/admin";
       } else {

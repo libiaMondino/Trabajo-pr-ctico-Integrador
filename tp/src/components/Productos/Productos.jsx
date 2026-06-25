@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { ProductoCard } from '../ProductoCard/ProductoCard';
 import auriculares from "/src/assets/img/img/auriculares.jpeg"
 import guitarraElectrica from "/src/assets/img/img/guitarraElectrica.jpg"
@@ -14,7 +15,7 @@ export const Productos = ({busqueda}) => {
     //Obtiene la categoria de la URL
     const {categoria} = useParams();
 
-    //ARREGLO DE PRUEBA
+    //ARREGLOS DE PRUEBA
     const arreglo=[
     {
         id: 1,
@@ -115,6 +116,24 @@ export const Productos = ({busqueda}) => {
         description:"Bajo eléctrico clásico con tono profundo y gran comodidad para cualquier estilo musical."
     },
     ];
+    
+    const [productosGuardados, setProductosGuardados] = useState([]);
+    
+    const obtenerProductos = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/productos");
+
+      const data = await response.json();
+      console.log(data);
+      setProductosGuardados(data);
+    } catch (error) {
+      console.error("Error al obtener productos:", error);
+    }};
+    
+    useEffect(() => {
+        obtenerProductos();
+    }, []);
+
   return (
     <>
     {
@@ -122,17 +141,19 @@ export const Productos = ({busqueda}) => {
             <h3 className="ms-3 mt-4">Categoría: {categoria}</h3>
             <div className="d-flex flex-wrap gap-3 ms-3">
                 {
-                    arreglo.filter((prod)=>{
+                    productosGuardados.filter((prod)=>{
                         if (busqueda.trim() !== ""){
                             return prod.name.toLowerCase().includes(busqueda.toLowerCase()) 
                         } 
+                        //Si no tiene categoria muestra todos los productos
                         if(!categoria){
                             return true;
                         }
                         return categoria === "Ofertas"? prod.percentageDiscount > 0 : categoria.toLowerCase() === prod.category.toLowerCase();
-                    
+                        console.log(productosGuardados);
                         })  
                     .map((prod)=> <ProductoCard key={prod.id} {...prod}/>)
+                    
                 }      
         
             </div>

@@ -104,7 +104,7 @@ export const ProductoCard = ({
 
         <Card.Text className="mb-0">
             <strong>
-            {percentageDiscount === 0 ? <h8>${price}</h8> : <h8 className='discounted-price'>${discountedPrice}</h8>}
+            {percentageDiscount === 0 ? <h6>${price}</h6> : <h6 className='discounted-price'>${discountedPrice}</h6>}
             </strong>
         </Card.Text>
     </Card.Body>

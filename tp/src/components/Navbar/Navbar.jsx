@@ -97,7 +97,7 @@ function Navbar({ setBusqueda }) {
 
                             {/* SOLO SUPER ADMIN */}
                             {role === "super_admin" && (
-                                <Link to="/super-admin" className="menu-btn icon-btn">
+                                <Link to="/super_admin" className="menu-btn icon-btn">
                                     <p className="m-0">Usuarios</p>
                                 </Link>
                             )}
