@@ -1,3 +1,7 @@
+import { Usuario } from "./Usuario.js";
+import { Pedido } from "./Pedido.js";
+import { Review } from "./Review.js";
+
 Usuario.hasMany(Pedido, {
     foreignKey: "usuarioId"
 });

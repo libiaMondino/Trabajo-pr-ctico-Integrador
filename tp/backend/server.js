@@ -1,5 +1,7 @@
 import { PUERTO } from "./config.js";
 import { sequelize } from "./dataBase.js";
+import { cargarProductos } from "./seeders/productos.js";
+
 
 
 import express from "express";
@@ -33,6 +35,9 @@ app.use(routerPedido);
 
 try {
   await sequelize.sync();
+  
+  await cargarProductos();
+
 
   app.listen(PUERTO, () => {
     console.log(`Servidor corriendo en puerto ${PUERTO}`);
@@ -61,4 +66,4 @@ const crearAdmin = async () => {
     }
 };
 
-crearAdmin();
+await crearAdmin();

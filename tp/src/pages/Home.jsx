@@ -79,7 +79,7 @@ function Home() {
                             />
                             <div className="card-body">
                                 <h5 className="card-title">
-                                    Batería Pearl
+                                    Batería Shelter
                                 </h5>
                                 <p className="card-text">
                                     $154999
