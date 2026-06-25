@@ -74,7 +74,15 @@ function InicioSesion() {
       localStorage.setItem("role", data.role);
 
       setMensaje("Inicio de sesión exitoso");
-      window.location.href = "/";
+      const role = data.role;
+
+      if (role === "super_admin") {
+        window.location.href = "/super-admin";
+      } else if (role === "admin") {
+        window.location.href = "/admin";
+      } else {
+        window.location.href = "/";
+      }
       console.log("Token:", data.token);
 
     } catch (error) {

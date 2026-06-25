@@ -19,24 +19,33 @@ import "./App.css";
 function App() {
   const [busqueda, setBusqueda] = useState("");
   return (
-  <>
-    <Navbar setBusqueda={setBusqueda}/>
-    
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/carrito" element={<PrivateRoute><Carrito /></PrivateRoute>}/>
-      <Route path="/productos/:categoria?" element={<Productos busqueda={busqueda} />} />
-      <Route path="/productos/:categoria?/:id" element={<ProductDetails/>} />
-      <Route path="/login" element={<InicioSesion />} />
-      <Route path="/registro" element={<Registracion />} />
-      <Route path="/nuevo-producto" element={<NewProduct />} />
-      <Route path="/admin" element={<RoleRoute allowedRoles={["admin", "super-admin"]}> <AdminPanel /></RoleRoute>}/>
-      <Route path="/super-admin" element={<RoleRoute allowedRoles={["super-admin"]}><SuperAdminPanel /></RoleRoute>}/>
-      <Route path="/admin/productos" element={<RoleRoute allowedRoles={["admin", "super-admin"]}><AdminProductos /></RoleRoute>}/>
-      <Route path="/admin/nuevo" element={<RoleRoute allowedRoles={["admin", "super-admin"]}><NewProduct /></RoleRoute>}/>
-    </Routes>
-    
-  </>
+    <>
+      <Navbar setBusqueda={setBusqueda} />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/carrito" element={<PrivateRoute><Carrito /></PrivateRoute>} />
+        <Route path="/productos/:categoria?" element={<Productos busqueda={busqueda} />} />
+        <Route path="/productos/:categoria?/:id" element={<ProductDetails />} />
+        <Route path="/login" element={<InicioSesion />} />
+        <Route path="/registro" element={<Registracion />} />
+        <Route path="/nuevo-producto" element={<NewProduct />} />
+        <Route path="/admin" element={
+          <RoleRoute allowedRoles={["admin", "super_admin"]}>
+            <AdminPanel />
+          </RoleRoute>
+        } />
+        <Route path="/super-admin" element={
+          <RoleRoute allowedRoles={["super_admin"]}>
+            <SuperAdminPanel />
+          </RoleRoute>
+        } />
+
+        <Route path="/admin/productos" element={<RoleRoute allowedRoles={["admin", "super-admin"]}><AdminProductos /></RoleRoute>} />
+        <Route path="/admin/nuevo" element={<RoleRoute allowedRoles={["admin", "super-admin"]}><NewProduct /></RoleRoute>} />
+      </Routes>
+
+    </>
   )
 }
 

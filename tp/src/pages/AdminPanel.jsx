@@ -1,12 +1,14 @@
 function AdminPanel() {
   return (
-    <>
-      <h1>Panel de Administración</h1>
+    <div>
+      <h1>Panel Admin</h1>
 
-      <p>
-        Solo pueden entrar Admin y Super Admin
-      </p>
-    </>
+      <ul>
+        <li>Gestionar productos</li>
+        <li>Editar stock</li>
+        <li>Eliminar productos</li>
+      </ul>
+    </div>
   );
 }
 
