@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Registro() {
+  const navigate = useNavigate();
+
   const [formulario, setFormulario] = useState({
     nombre: "",
     email: "",
     password: "",
     rol: "usuario",
-
   });
 
   const [errores, setErrores] = useState({});
@@ -22,20 +23,6 @@ function Registro() {
 
   const validar = () => {
     let nuevosErrores = {};
-
-    <div>
-      <label>Rol:</label>
-
-      <select
-        name="rol"
-        value={formulario.rol}
-        onChange={manejarCambio}
-      >
-        <option value="usuario">Usuario</option>
-        <option value="admin">Admin</option>
-        <option value="super-admin">Super Admin</option>
-      </select>
-    </div>
 
     if (!formulario.nombre.trim()) {
       nuevosErrores.nombre = "El nombre es obligatorio";
@@ -66,47 +53,49 @@ function Registro() {
     if (Object.keys(erroresEncontrados).length > 0) return;
 
     try {
-      const response = await fetch("http://localhost:3001/usuarios/registro", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formulario.nombre,
-          email: formulario.email,
-          password: formulario.password
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:3001/usuarios/registro",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formulario.nombre,
+            email: formulario.email,
+            password: formulario.password,
+            role: formulario.rol,
+          }),
+        }
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
-        setMensaje(data.message);
+        setMensaje(data.message || "Error al registrar usuario");
         return;
       }
 
       setMensaje("Registro exitoso");
       console.log("Usuario creado:", data);
-      
-      window.location.href = "/login";
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
     } catch (error) {
       console.error(error);
       setMensaje("Error al registrar usuario");
     }
-    
   };
 
   return (
     <div className="login-container">
-
       <div className="login-card">
-
         <h1 className="login-title">
           Registro de Usuario
         </h1>
 
         <form onSubmit={manejarSubmit}>
-
           <div className="login-input">
             <label className="form-label">
               Nombre
@@ -167,6 +156,23 @@ function Registro() {
             )}
           </div>
 
+          <div className="login-input">
+            <label className="form-label">
+              Rol
+            </label>
+
+            <select
+              name="rol"
+              className="form-control"
+              value={formulario.rol}
+              onChange={manejarCambio}
+            >
+              <option value="usuario">Usuario</option>
+              <option value="admin">Admin</option>
+              <option value="super-admin">Super Admin</option>
+            </select>
+          </div>
+
           <button
             type="submit"
             className="btn login-btn text-black"
@@ -175,13 +181,11 @@ function Registro() {
           </button>
 
           <p className="text-center mt-3">
-            ¿Ya tenés cuenta?
-
+            ¿Ya tenés cuenta?{" "}
             <Link to="/login">
               Iniciá sesión
             </Link>
           </p>
-
         </form>
 
         {mensaje && (
@@ -189,13 +193,9 @@ function Registro() {
             {mensaje}
           </p>
         )}
-
       </div>
-
     </div>
   );
 }
-
-
 
 export default Registro;

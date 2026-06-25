@@ -1,35 +1,40 @@
-//FALTA JWT 
 import { DataTypes } from "sequelize";
 import { sequelize } from "../dataBase.js";
-export const Usuario = sequelize.define("usuario",{
-    id:{
+
+export const Usuario = sequelize.define("usuario", {
+    id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    name:{
+
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    email:{
+
+    email: {
         type: DataTypes.STRING,
-        unique: true,
         allowNull: false,
+        unique: true,
         validate: {
             isEmail: true
         }
     },
-    password:{
-        //Capaz mejor tipo text
+
+    password: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate:{
-            len:[8,100]
+        validate: {
+            len: [8, 100]
         }
     },
-    role:{
-        type: DataTypes.ENUM("usuario","admin","super_admin"),
-        defaultValue: "usuario",
-        allowNull: false
+
+    role: {
+        type: DataTypes.ENUM("usuario", "admin", "super_admin"),
+        allowNull: false,
+        defaultValue: "usuario"
     }
-})
+}, {
+    timestamps: true
+});

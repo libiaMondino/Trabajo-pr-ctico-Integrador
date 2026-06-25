@@ -32,7 +32,7 @@ export const Productos = ({busqueda}) => {
     },
     {
         id: 2,
-        name: "Guitarra Eléctrica Stratocaster",
+        name: "Guitarra Eléctrica Fender Stratocaster HSS",
         type: "Guitarra",
         brand: "Fender",
         category: "musica",
@@ -60,7 +60,7 @@ export const Productos = ({busqueda}) => {
     },
     {
         id: 4,
-        name: "Piano Eléctrico Yamaha Psr-e383",
+        name: "Piano Eléctrico Yamaha P-125",
         type: "Piano",
         brand: "Yamaha",
         category: "musica",
@@ -74,9 +74,9 @@ export const Productos = ({busqueda}) => {
     },
     {
         id: 5,
-        name: "Bateria Pearl",
+        name: "Bateria Shelter",
         type: "Bateria",
-        brand: "Pearl",
+        brand: "Shelter",
         category: "musica",
         rating: 4.2,
         imgUrl: bateria,
@@ -102,9 +102,9 @@ export const Productos = ({busqueda}) => {
     },
     {
         id: 7,
-        name: "Bajo Fender Precision",
+        name: "Bajo Yamaha TRBX174 Precision",
         type: "Bajo",
-        brand: "Fender",
+        brand: "Yamaha",
         category: "musica",
         rating: 4.4,
         imgUrl: bajo,
