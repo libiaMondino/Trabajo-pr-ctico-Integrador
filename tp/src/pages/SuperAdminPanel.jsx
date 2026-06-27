@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./superAdminPanel.css";
 
 function SuperAdminPanel() {
   const [usuarios, setUsuarios] = useState([]);
@@ -55,28 +56,53 @@ function SuperAdminPanel() {
   };
 
   return (
-    <div>
-      <h1>Super Admin Panel</h1>
+    <div className="superadmin-container">
 
-      {usuarios.map((u) => (
-        <div key={u.id} style={{ border: "1px solid black", margin: 10 }}>
-          <p>{u.name}</p>
-          <p>{u.email}</p>
-          <p>{u.role}</p>
+      <h1 className="superadmin-title">Panel Super Admin</h1>
 
-          <button onClick={() => cambiarRol(u.id, "admin")}>
-            Hacer admin
-          </button>
+      <div className="user-grid">
 
-          <button onClick={() => cambiarRol(u.id, "usuario")}>
-            Hacer usuario
-          </button>
+        {usuarios.map((u) => (
+          <div key={u.id} className="user-card">
 
-          <button onClick={() => eliminarUsuario(u.id)}>
-            Eliminar
-          </button>
-        </div>
-      ))}
+            <div className="user-info">
+              <h3>{u.name}</h3>
+              <p>{u.email}</p>
+
+              <span className={`role-badge ${u.role}`}>
+                {u.role}
+              </span>
+            </div>
+
+            <div className="user-actions">
+
+              <button
+                className="btn-admin btn-green"
+                onClick={() => cambiarRol(u.id, "admin")}
+              >
+                Hacer admin
+              </button>
+
+              <button
+                className="btn-admin btn-blue"
+                onClick={() => cambiarRol(u.id, "usuario")}
+              >
+                Usuario
+              </button>
+
+              <button
+                className="btn-admin btn-red"
+                onClick={() => eliminarUsuario(u.id)}
+              >
+                Eliminar
+              </button>
+
+            </div>
+
+          </div>
+        ))}
+
+      </div>
     </div>
   );
 }

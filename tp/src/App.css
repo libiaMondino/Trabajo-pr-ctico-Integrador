@@ -69,6 +69,20 @@
     color: #888;
 }
 
+.price-highlight {
+  color: #7a1f3d;
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0;
+}
+
+.price-original {
+  font-size: 12px;
+  color: #999;
+  text-decoration: line-through;
+  margin: 0;
+}
+
 /*Creo que se tiene que borrar todo lo que sigue*/
 .counter {
   font-size: 16px;

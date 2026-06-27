@@ -64,7 +64,7 @@ export const cargarProductos = async () => {
             imgUrl: "/img/bateria.jpeg",
             available: true,
             price: 154999,
-            percentageDiscount: 5,
+            percentageDiscount: 0,
             stock: 12,
             description: "Batería acústica completa con gran respuesta sonora, ideal para principiantes y avanzados."
         },

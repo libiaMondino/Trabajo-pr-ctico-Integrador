@@ -1,0 +1,77 @@
+.superadmin-container {
+  padding: 30px;
+  background: #f5f6fa;
+  min-height: 100vh;
+}
+
+.superadmin-title {
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+.user-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.user-card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.user-info h3 {
+  margin: 0;
+}
+
+.user-info p {
+  margin: 0;
+  color: #666;
+}
+
+.role-badge {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: white;
+}
+
+.role-badge.admin {
+  background: #007bff;
+}
+
+.role-badge.usuario {
+  background: #6c757d;
+}
+
+.btn-admin {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 5px;
+  color: white;
+}
+
+.btn-green {
+  background: #28a745;
+}
+
+.btn-blue {
+  background: #007bff;
+}
+
+.btn-red {
+  background: #dc3545;
+}
+
+.btn-admin:hover {
+  opacity: 0.85;
+}
