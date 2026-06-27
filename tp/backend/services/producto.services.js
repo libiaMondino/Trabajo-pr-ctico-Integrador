@@ -70,7 +70,7 @@ export const crearProducto = async (req, res) => {
             description
         } = req.body;
 
-        const categoriasValidas = ["Música", "Audio"];
+        const categoriasValidas = ["Musica", "Audio"];
 
         if (!name || !type || !brand || price === undefined) {
             return res.status(400).json({
@@ -146,7 +146,7 @@ export const actualizarProducto = async (req, res) => {
             description
         } = req.body;
 
-        const categoriasValidas = ["Música", "Audio"];
+        const categoriasValidas = ["Musica", "Audio"];
 
         if (category && !categoriasValidas.includes(category)) {
             return res.status(400).json({
@@ -191,6 +191,7 @@ export const actualizarProducto = async (req, res) => {
         });
     }
 };
+
 
 export const eliminarProducto = async (req, res) => {
     try {

@@ -19,6 +19,8 @@ export const ProductoCard = ({
 
     }) => {
 
+    console.log({ name, imgUrl });
+
     const navigate= useNavigate();
 
     const ratingStars= Array.from({length: 5},(_, index) =>(

@@ -20,10 +20,10 @@ export const Producto = sequelize.define("producto", {
         allowNull: false
     }, 
     category:{
-        type: DataTypes.ENUM("Audio", "Música"),
+        type: DataTypes.ENUM("Audio", "Musica"),
         validate: {
             isIn: {
-                args: [["Música", "Audio"]]
+                args: [["Musica", "Audio"]]
             }
         }
     }, 
