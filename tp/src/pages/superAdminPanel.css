@@ -44,11 +44,11 @@
 }
 
 .role-badge.admin {
-  background: #007bff;
+  background: #28a745;
 }
 
 .role-badge.usuario {
-  background: #6c757d;
+  background: #007bff;
 }
 
 .btn-admin {

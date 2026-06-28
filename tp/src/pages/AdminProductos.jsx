@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import "./adminProductos.css";
 
 function AdminProductos() {
   const [productos, setProductos] = useState([]);
-  const [editando, setEditando] = useState(null);
+  const [editandoId, setEditandoId] = useState(null);
+  const [formEdit, setFormEdit] = useState({});
 
   useEffect(() => {
     obtenerProductos();
@@ -10,12 +12,8 @@ function AdminProductos() {
 
   const obtenerProductos = async () => {
     try {
-      const response = await fetch(
-        "http://localhost:3001/productos"
-      );
-
+      const response = await fetch("http://localhost:3001/productos");
       const data = await response.json();
-
       setProductos(data);
     } catch (error) {
       console.error("Error al obtener productos:", error);
@@ -24,24 +22,21 @@ function AdminProductos() {
 
   // ELIMINAR
   const eliminarProducto = async (id) => {
+    const confirmar = window.confirm(
+      "¿Seguro que querés eliminar este producto? Esta acción no se puede deshacer."
+    );
+
+    if (!confirmar) return;
+
     try {
       const token = localStorage.getItem("token");
 
-      const response = await fetch(
-        `http://localhost:3001/productos/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        const error = await response.json();
-        alert(error.message);
-        return;
-      }
+      await fetch(`http://localhost:3001/productos/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       obtenerProductos();
     } catch (error) {
@@ -49,151 +44,172 @@ function AdminProductos() {
     }
   };
 
-  // EDITAR
+  // INICIAR EDICIÓN INLINE
   const iniciarEdicion = (producto) => {
-    console.log("EDITANDO", producto);
-    setEditando(producto);
+    setEditandoId(producto.id);
+    setFormEdit(producto);
   };
 
+  // CAMBIOS EN INPUTS
   const handleChange = (e) => {
-    setEditando({
-      ...editando,
+    setFormEdit({
+      ...formEdit,
       [e.target.name]: e.target.value,
     });
   };
 
-  const guardarEdicion = async () => {
+  // GUARDAR EDICIÓN
+  const guardarEdicion = async (id) => {
     try {
-      const payload = { // = carga útil
-        name: editando.name,
-        type: editando.type,
-        brand: editando.brand,
-        category: editando.category,
-        imgUrl: editando.imgUrl,
-        price: Number(editando.price),
-        percentageDiscount: Number(editando.percentageDiscount),
-        stock: Number(editando.stock),
-        rating: Number(editando.rating),
-        description: editando.description
-      };
       const token = localStorage.getItem("token");
 
-      const response = await fetch(
-        `http://localhost:3001/productos/${editando.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const payload = {
+        ...formEdit,
+        price: Number(formEdit.price),
+        percentageDiscount: Number(formEdit.percentageDiscount),
+        stock: Number(formEdit.stock),
+        rating: Number(formEdit.rating),
+      };
 
-      if (!response.ok) {
-        const error = await response.json();
-        alert(error.message);
-        return;
-      }
+      await fetch(`http://localhost:3001/productos/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(payload),
+      });
 
+      setEditandoId(null);
       obtenerProductos();
-      setEditando(null);
     } catch (error) {
       console.error("Error al actualizar producto:", error);
     }
   };
-  console.log("Estado editando:", editando);
+
   return (
-    <div className="container mt-4">
+    <div className="container">
       <h2>ABM Productos</h2>
 
       {productos.map((p) => (
-        <div key={p.id} className="border p-2 mb-2">
-          <h4>{p.name}</h4>
-          <p>{p.type}</p>
-          <p>{p.brand}</p>
-          <p>{p.category}</p>
-          <p>{p.rating}</p>
-          <p>{p.imgUrl}</p>
-          <p>${p.price}</p>
-          <p>{p.percentageDiscount}</p>
-          <p>{p.stock}</p>
-          <p>{p.description}</p>
+        <div key={p.id} className="border">
 
-          <button onClick={() => eliminarProducto(p.id)}>
-            Eliminar
-          </button>
+          {editandoId === p.id ? (
+            <>
+              <label>Nombre:</label>
+              <input
+                name="name"
+                value={formEdit.name}
+                onChange={handleChange}
+              />
 
-          <button onClick={() => iniciarEdicion(p)}>
-            Editar
-          </button>
+              <label>Marca:</label>
+              <input
+                name="brand"
+                value={formEdit.brand}
+                onChange={handleChange}
+              />
+
+              <label>Tipo:</label>
+              <input
+                name="type"
+                value={formEdit.type}
+                onChange={handleChange}
+              />
+
+              <label>Categoría:</label>
+              <input
+                name="category"
+                value={formEdit.category}
+                onChange={handleChange}
+              />
+
+              <label>Precio:</label>
+              <input
+                name="price"
+                value={formEdit.price}
+                onChange={handleChange}
+              />
+
+              <label>Descuento (%):</label>
+              <input
+                name="percentageDiscount"
+                value={formEdit.percentageDiscount}
+                onChange={handleChange}
+              />
+
+              <label>Stock:</label>
+              <input
+                name="stock"
+                value={formEdit.stock}
+                onChange={handleChange}
+              />
+
+              <label>Rating:</label>
+              <input
+                name="rating"
+                value={formEdit.rating}
+                onChange={handleChange}
+              />
+
+              <label>Imagen (URL):</label>
+              <input
+                name="imgUrl"
+                value={formEdit.imgUrl}
+                onChange={handleChange}
+              />
+
+              <label>Descripción:</label>
+              <input
+                name="description"
+                value={formEdit.description}
+                onChange={handleChange}
+              />
+
+              <button
+                className="btn-save"
+                onClick={() => guardarEdicion(p.id)}
+              >
+                Guardar
+              </button>
+
+              <button
+                className="btn-cancel"
+                onClick={() => setEditandoId(null)}
+              >
+                Cancelar
+              </button>
+            </>
+          ) : (
+            <>
+              <h4>{p.name}</h4>
+              <p>Marca: {p.brand}</p>
+              <p>Tipo: {p.type}</p>
+              <p>Categoría: {p.category}</p>
+              <p>Precio: ${p.price}</p>
+              <p>Descuento: {p.percentageDiscount}%</p>
+              <p>Stock: {p.stock}</p>
+              <p>Rating: {p.rating}</p>
+              <p>{p.description}</p>
+
+              <button
+                className="btn-edit"
+                onClick={() => iniciarEdicion(p)}
+              >
+                Editar
+              </button>
+
+              <button
+                className="btn-delete"
+                onClick={() => eliminarProducto(p.id)}
+              >
+                Eliminar
+              </button>
+            </>
+          )}
+
         </div>
       ))}
-      
-      {editando && (
-        <div className="border p-3 mt-4">
-          <h3>Editar Producto</h3>
-
-          <input
-          name="name"
-          placeholder="Nombre"
-          value={editando.name}
-          onChange={handleChange}
-        />
-        <input
-          name="type"
-          placeholder="Tipo"
-          value={editando.type}
-          onChange={handleChange}
-        />
-        <input
-          name="brand"
-          placeholder="Marca"
-          value={editando.brand}
-          onChange={handleChange}
-        />
-        <input
-          name="category"
-          placeholder="Categoría"
-          value={editando.category}
-          onChange={handleChange}
-        />
-        <input
-          name="imgUrl"
-          placeholder="URL de imágen"
-          value={editando.imgUrl}
-          onChange={handleChange}
-        />
-        <input
-          name="price"
-          placeholder="Precio"
-          value={editando.price}
-          onChange={handleChange}
-        />
-        <input
-          name="percentageDiscount"
-          placeholder="percentageDiscount"
-          value={editando.percentageDiscount}
-          onChange={handleChange}
-        />
-        <input
-          name="stock"
-          placeholder="Stock"
-          value={editando.stock}
-          onChange={handleChange}
-        />
-        <input
-          name="description"
-          placeholder="Descripción"
-          value={editando.description}
-          onChange={handleChange}
-        />
-
-          <button onClick={guardarEdicion}>
-            Guardar cambios
-          </button>
-        </div>
-      )}
     </div>
   );
 }

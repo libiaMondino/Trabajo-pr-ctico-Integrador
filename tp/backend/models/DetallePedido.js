@@ -4,40 +4,42 @@ import { Pedido } from "./Pedido.js";
 import { Producto } from "./Producto.js";
 
 export const DetallePedido = sequelize.define("detallePedido", {
-    pedidoId:{
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        references:{
-            model: Pedido,
-            key:"id"
-        },
-        onDelete: "CASCADE", // Si se elimina el pedido, se eliminan todos sus detalles
+  pedidoId: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    references: {
+      model: Pedido,
+      key: "id",
     },
-    productoId:{
-        type: DataTypes.INTEGER,
-        // Al poner primary key en productoId y pedidoID evita que en un mismo pedido haya producto repetido
-        primaryKey:true,
-        references:{
-            model: Producto,
-            key: "id"
-        }
-        //onDelete: RESTRICT
-        //onUpdate: CASCADE
+    onDelete: "CASCADE",
+  },
+
+  productoId: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    references: {
+      model: Producto,
+      key: "id",
     },
-    cantidad:{
-        type: DataTypes.INTEGER,
-        defaultValue: 1,
-        allowNull: false,
-        validate:{
-            min:1
-        }
+    onDelete: "RESTRICT",
+  },
+
+  cantidad: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: 1,
+    validate: {
+      min: 1,
     },
-    subtotal:{
-        type: DataTypes.DECIMAL(10,2),
-        allowNull: false,
-        defaultValue:0,
-        validate:{
-            min:0
-        }
-    }
-})
+  },
+
+  
+  subtotal: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,
+    defaultValue: 0,
+    validate: {
+      min: 0,
+    },
+  },
+});

@@ -52,13 +52,12 @@ function Carrito() {
                       maxWidth: "140px",
                     }}
                   >
-                    <img className="producto-imagen"
+                    <img className="producto-imagen img-fluid"
                       src={
                         item.imgUrl ||
                         "https://www.eclosio.ong/wp-content/uploads/2018/08/default.png"
                       }
                       alt={item.name}
-                      className="img-fluid"
                       style={{
                         maxHeight: "100%",
                         objectFit: "contain",

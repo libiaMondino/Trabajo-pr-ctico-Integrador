@@ -45,6 +45,12 @@ function SuperAdminPanel() {
   };
 
   const eliminarUsuario = async (id) => {
+    const confirmar = window.confirm(
+      "¿Estás seguro de que querés eliminar este usuario? Esta acción no se puede deshacer."
+    );
+
+    if (!confirmar) return;
+
     await fetch(`http://localhost:3001/usuarios/super_admin/usuarios/${id}`, {
       method: "DELETE",
       headers: {
@@ -76,26 +82,36 @@ function SuperAdminPanel() {
 
             <div className="user-actions">
 
-              <button
-                className="btn-admin btn-green"
-                onClick={() => cambiarRol(u.id, "admin")}
-              >
-                Hacer admin
-              </button>
+              {u.role !== "super_admin" && (
+                <>
+                  {u.role === "admin" && (
+                    <button
+                      className="btn-admin btn-blue"
+                      onClick={() => cambiarRol(u.id, "usuario")}
+                    >
+                      Hacer usuario
+                    </button>
+                  )}
 
-              <button
-                className="btn-admin btn-blue"
-                onClick={() => cambiarRol(u.id, "usuario")}
-              >
-                Usuario
-              </button>
+                  {u.role === "usuario" && (
+                    <button
+                      className="btn-admin btn-green"
+                      onClick={() => cambiarRol(u.id, "admin")}
+                    >
+                      Hacer admin
+                    </button>
+                  )}
+                </>
+              )}
 
-              <button
-                className="btn-admin btn-red"
-                onClick={() => eliminarUsuario(u.id)}
-              >
-                Eliminar
-              </button>
+              {u.role !== "super_admin" && (
+                <button
+                  className="btn-admin btn-red"
+                  onClick={() => eliminarUsuario(u.id)}
+                >
+                  Eliminar
+                </button>
+              )}
 
             </div>
 

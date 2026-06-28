@@ -1,21 +1,28 @@
 import { Link } from "react-router-dom";
+import "./adminPanel.css";
 
 function AdminPanel() {
   return (
-    <div className="container mt-4">
-      <h1>Panel de Administración</h1>
+    <div className="admin-home">
 
-      <p>Seleccione una opción:</p>
+      <h1 className="admin-title">Panel de Administración</h1>
 
-      <div style={{ display: "flex", gap: "10px" }}>
-        <Link to="/admin/productos">
-          <button>Administrar Productos</button>
+      <p className="admin-subtitle">Seleccione una opción:</p>
+
+      <div className="admin-options">
+
+        <Link to="/admin/productos" className="admin-card">
+          <h3>Administrar productos</h3>
+          <p>Editar, eliminar y ver stock</p>
         </Link>
 
-        <Link to="/admin/nuevo">
-          <button>Crear Producto</button>
+        <Link to="/admin/nuevo" className="admin-card">
+          <h3>Crear producto</h3>
+          <p>Agregar nuevos productos</p>
         </Link>
+
       </div>
+
     </div>
   );
 }

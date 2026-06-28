@@ -2,9 +2,12 @@ import { Router } from "express";
 import { crearDetallePedido, actualizarDetallePedido, eliminarDetallePedido } from "../services/detallePedido.services.js";
 import { verifyToken } from "../middleware/verifyToken.js";
 
-const routerDetallePed = Router();
-routerDetallePed.post("/carrito",verifyToken, crearDetallePedido);
-routerDetallePed.put("/carrito",verifyToken, actualizarDetallePedido);
-routerDetallePed.delete("/carrito",verifyToken, eliminarDetallePedido);
+const routerCarrito = Router();
 
-export default routerDetallePed;
+routerCarrito.post("/carrito", verifyToken, crearDetallePedido);
+
+routerCarrito.patch("/carrito", verifyToken, actualizarDetallePedido);
+
+routerCarrito.delete("/carrito", verifyToken, eliminarDetallePedido);
+
+export default routerCarrito;
