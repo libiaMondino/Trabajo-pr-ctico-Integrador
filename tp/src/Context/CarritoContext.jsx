@@ -6,6 +6,7 @@ export const CarritoContext = createContext();
 
 export function CarritoProvider({ children }) {
   const [carrito, setCarrito] = useState([]);
+  const[idPedido, setIdPedido] = useState("");
 
   // AGREGAR AL CARRITO
   const agregarAlCarrito = async (producto, cantidad = 1) => {
@@ -27,6 +28,10 @@ export function CarritoProvider({ children }) {
         throw new Error(error.message || "Error al agregar al carrito");
       }
 
+      //Se guarda en estado el pedidoId
+      const detalle = await res.json();
+      setIdPedido(detalle.pedidoId);
+
       setCarrito((prev) => {
         const existe = prev.find((item) => item.id === producto.id);
 
@@ -47,6 +52,7 @@ export function CarritoProvider({ children }) {
 
         return [...prev, { ...producto, cantidad }];
       });
+      
     } catch (error) {
       console.error("Error detectado:", error);
       alert(error.message);
@@ -180,6 +186,29 @@ export function CarritoProvider({ children }) {
     0
   );
 
+  
+    const finalizarCarrito = async () => {
+
+      try {
+        const res = await fetch(`http://localhost:3001/carrito/${idPedido}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error(data.message);
+        }
+        vaciarCarrito();
+        alert("Ha finalizado su pedido con éxito!");
+
+      } catch (error) {
+        console.error("5. Error:", error);
+        alert(error.message);
+      };
+  }
   return (
     <CarritoContext.Provider
       value={{
@@ -190,6 +219,7 @@ export function CarritoProvider({ children }) {
         disminuirCantidad,
         vaciarCarrito,
         total,
+        finalizarCarrito
       }}
     >
       {children}

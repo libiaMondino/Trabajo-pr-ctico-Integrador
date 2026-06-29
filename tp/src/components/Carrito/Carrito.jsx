@@ -9,6 +9,7 @@ function Carrito() {
     aumentarCantidad,
     disminuirCantidad,
     total,
+    finalizarCarrito,
   } = useContext(CarritoContext);
 
   return (
@@ -170,7 +171,7 @@ function Carrito() {
               Total: $ {total}
             </h3>
 
-            <button className="btn-finalizar">
+            <button className="btn-finalizar" onClick={()=>finalizarCarrito()}>
               Finalizar compra
             </button>
 

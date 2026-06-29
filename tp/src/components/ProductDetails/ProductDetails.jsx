@@ -94,10 +94,9 @@ export const ProductDetails = () => {
       percentageDiscount,
       stock,
       description,
-      cantidad: Number(cantidad),
     };
 
-    agregarAlCarrito(productoAlCarrito);
+    agregarAlCarrito(productoAlCarrito, Number(cantidad));
 
     alert("Producto agregado al carrito");
 

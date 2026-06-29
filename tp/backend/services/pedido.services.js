@@ -2,7 +2,7 @@ import { Pedido } from "../models/Pedido.js";
 
 // Se crea cuando se ingresa un detalle (más infromación en detallePedidos.js)
 export const actualizarPedido = async(req,res) =>{
-    const {id}=req.params;
+    const {id} = req.params;
     const usuarioId = req.user.id;
     const pedido = await Pedido.findOne({
         where:{

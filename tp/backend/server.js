@@ -22,7 +22,7 @@ import "./models/Producto.js";
 import "./models/DetallePedido.js";
 import "./models/Pedido.js";
 import {Usuario} from "./models/Usuario.js";
-import routerCarrito from "./routes/detallePedido.routes.js";
+//import routerCarrito from "./routes/detallePedido.routes.js";
 
 
 const app = express();
@@ -30,12 +30,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/productos", routerProductos);
-app.use(routerCarrito);
+app.use(routerDetallePed);
 app.use("/usuarios", routerUsuarios);
 app.use(routerPedido);    
 
 try {
-  await sequelize.sync({ alter: true });
+  await sequelize.sync();
   
   await cargarProductos();
 
@@ -66,5 +66,4 @@ const crearAdmin = async () => {
         console.log("Admin creado");
     }
 };
-
 await crearAdmin();
