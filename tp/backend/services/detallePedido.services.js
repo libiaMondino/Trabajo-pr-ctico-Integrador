@@ -35,7 +35,7 @@ export const crearDetallePedido = async (req, res) => {
     });
 
     if (detalle) {
-      
+
       const nuevaCantidad = detalle.cantidad + cantidad;
 
       const nuevoSubtotal =
@@ -64,8 +64,20 @@ export const crearDetallePedido = async (req, res) => {
 
     return res.json(detalle);
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: error.message });
+    console.error("ERROR COMPLETO:");
+    console.error(error);
+
+    if (error.errors) {
+      error.errors.forEach((e) => {
+        console.error(e.message);
+        console.error("Campo:", e.path);
+        console.error("Valor:", e.value);
+      });
+    }
+
+    return res.status(500).json({
+      message: error.message,
+    });
   }
 };
 

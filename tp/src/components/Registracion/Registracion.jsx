@@ -156,23 +156,6 @@ function Registro() {
             )}
           </div>
 
-          <div className="login-input">
-            <label className="form-label">
-              Rol
-            </label>
-
-            <select
-              name="rol"
-              className="form-control"
-              value={formulario.rol}
-              onChange={manejarCambio}
-            >
-              <option value="usuario">Usuario</option>
-              <option value="admin">Admin</option>
-              <option value="super_admin">Super Admin</option>
-            </select>
-          </div>
-
           <button
             type="submit"
             className="btn login-btn text-black"

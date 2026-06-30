@@ -202,6 +202,7 @@ export function CarritoProvider({ children }) {
           throw new Error(data.message);
         }
         vaciarCarrito();
+        setIdPedido("");
         alert("Ha finalizado su pedido con éxito!");
 
       } catch (error) {
